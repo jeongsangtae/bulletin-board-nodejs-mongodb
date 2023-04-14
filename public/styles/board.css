@@ -1,0 +1,127 @@
+.board-list-top .board-top {
+  border-bottom: 1px solid rgb(170, 164, 164);
+}
+
+.board-list-top .board-top > div {
+  font-weight: 600;
+}
+
+.board-list-top {
+  width: 100%;
+  border-top: 2px solid black;
+}
+
+.board-list > div,
+.board-list-top > div {
+  border-bottom: 1px dashed rgb(221, 221, 221);
+  font-size: 0;
+}
+
+.board-list > div > div,
+.board-list-top > div > div {
+  display: inline-block;
+  padding: 0.8rem 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.board-list .board-num,
+.board-list-top .board-num {
+  width: 10%;
+}
+
+.board-list .board-title,
+.board-list-top .board-title {
+  width: 60%;
+  text-align: left;
+}
+
+.board-list .board-top .board-title,
+.board-list-top .board-top .board-title {
+  text-align: center;
+}
+
+.board-list .board-writer,
+.board-list-top .board-writer {
+  width: 10%;
+}
+
+.board-list .board-date,
+.board-list-top .board-date {
+  width: 10%;
+}
+
+.board-list .board-count,
+.board-list-top .board-count {
+  width: 10%;
+}
+
+.board-list .board-a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.board-list a {
+  color: black;
+}
+
+.board-list > div:last-child {
+  border-bottom: 1px solid black;
+}
+
+.board-page {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0;
+}
+
+.board-page a {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  border: 1px solid rgb(221, 221, 221);
+  border-left: 0;
+  vertical-align: middle;
+  line-height: 100%;
+}
+
+.board-page .btn {
+  font-size: 1rem;
+  padding-top: 10px;
+  letter-spacing: -1px;
+}
+
+.board-page .start {
+  border-left: 1px solid rgb(221, 221, 221);
+  font-size: 0.8rem;
+  padding-top: 9px;
+  cursor: pointer;
+}
+
+.board-page .first,
+.board-page .next,
+.board-page .btn-num,
+.board-page .end {
+  font-size: 0.8rem;
+  padding-top: 9px;
+  cursor: pointer;
+}
+
+a.on {
+  border-color: black;
+  background-color: black;
+  color: white;
+}
+
+.board-page .start:hover,
+.board-page .first:hover,
+.board-page .next:hover,
+.board-page .end:hover,
+.board-page .btn-num:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.board-page .on:hover {
+  background-color: rgb(40, 40, 40);
+}

@@ -1,0 +1,64 @@
+@media (max-width: 1000px) {
+  /* .nav-container {
+    max-width: 60rem;
+  } */
+  .main-container {
+    min-width: 20rem;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+  .board-list .board-num,
+  .board-list .board-writer,
+  .board-list .board-count {
+    display: none;
+  }
+  .board-list .board-date {
+    width: 40%;
+  }
+  .board-list .board-title {
+    text-indent: 1rem;
+  }
+  .board-list .board-top .board-title {
+    text-indent: 0;
+  }
+  .board-page a {
+    width: 26px;
+    height: 26px;
+  }
+  .board-page .btn {
+    padding-top: 7px;
+  }
+  .board-page .btn-num {
+    padding-top: 6px;
+  }
+  .board-view .board-info dl {
+    width: 50%;
+    padding: 0;
+  }
+  .board-view .board-info dl:nth-child(-n + 2) {
+    margin-bottom: 5px;
+  }
+  .board-view .board-info dl::before {
+    display: none;
+  }
+  .board-view .board-info dl dt,
+  .board-view .board-info dl dd {
+    font-size: 0.9rem;
+  }
+  .board-write .write-title label,
+  .board-write .write-info label {
+    display: none;
+  }
+  .board-write .write-title input {
+    width: 99%;
+  }
+  .board-write .write-info input {
+    width: 98%;
+  }
+  .board-write .write-title input {
+    margin-left: 0.5%;
+  }
+  .board-write .write-info input {
+    margin-left: 1%;
+  }
+}

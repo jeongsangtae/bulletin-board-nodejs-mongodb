@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head', { title: "글쓰기" }) %>
+    <link rel="stylesheet" href="public/styles/write.css" />
+  </head>
+  <body>
+    <%- include('includes/header') %>
+    <form
+      action="/posts"
+      method="POST"
+      class="main-container"
+      id="main-write-container"
+    >
+      <div class="main-title">
+        <h1>게시글</h1>
+        <p>게시글을 작성해보세요.</p>
+      </div>
+      <div class="board-write-container">
+        <div class="board-write">
+          <div class="write-title">
+            <label for="">제목</label>
+            <input
+              type="text"
+              id="title-input"
+              required
+              placeholder="제목 입력"
+            />
+          </div>
+          <div class="write-info">
+            <div>
+              <label for="">글쓴이</label>
+              <input
+                type="text"
+                id="info-writer"
+                required
+                placeholder="글쓴이 입력"
+              />
+            </div>
+            <div>
+              <label for="">비밀번호</label>
+              <input
+                type="password"
+                id="info-password"
+                autocomplete=""
+                required
+                placeholder="비밀번호 입력"
+              />
+            </div>
+          </div>
+          <div class="write-content">
+            <textarea
+              type="text"
+              id="content-textarea"
+              required
+              rows="8"
+              placeholder="내용 입력"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn-add">등록</button>
+        <a href="index.html" class="btn-cancel">취소</a>
+      </div>
+    </form>
+    <script src="public/scripts/write.js" defer></script>
+  </body>
+</html>

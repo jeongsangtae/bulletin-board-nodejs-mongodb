@@ -22,10 +22,17 @@
             <div class="board-count">조회</div>
           </div>
         </div>
-        <div class="board-list" id="board-list-table"></div>
+        <% if (!posts || posts.length === 0) { %>
+        <p>게시글이 없습니다. 게시글을 추가해보세요.</p>
+        <% } else { %>
+        <div class="board-list" id="board-list-table">
+          <% for(const post of posts) { %> <%- include('includes/post', { post:
+          post }) %> <% } %>
+        </div>
         <div class="board-page" id="board-list-page"></div>
+        <% } %>
         <div class="btn-wrap">
-          <a href="write.html" class="btn-add">등록</a>
+          <a href="/create-post" class="btn-add">등록</a>
         </div>
       </div>
     </div>

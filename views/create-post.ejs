@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <%- include('includes/head', { title: "글쓰기" }) %>
-    <link rel="stylesheet" href="public/styles/write.css" />
+    <link rel="stylesheet" href="/styles/write.css" />
   </head>
+
   <body>
     <%- include('includes/header') %>
     <form
@@ -19,31 +20,34 @@
       <div class="board-write-container">
         <div class="board-write">
           <div class="write-title">
-            <label for="">제목</label>
+            <label for="title">제목</label>
             <input
               type="text"
               id="title-input"
               required
+              name="title"
               placeholder="제목 입력"
             />
           </div>
           <div class="write-info">
             <div>
-              <label for="">글쓴이</label>
+              <label for="writer">글쓴이</label>
               <input
                 type="text"
                 id="info-writer"
                 required
+                name="writer"
                 placeholder="글쓴이 입력"
               />
             </div>
             <div>
-              <label for="">비밀번호</label>
+              <label for="password">비밀번호</label>
               <input
                 type="password"
                 id="info-password"
                 autocomplete=""
                 required
+                name="password"
                 placeholder="비밀번호 입력"
               />
             </div>
@@ -54,6 +58,7 @@
               id="content-textarea"
               required
               rows="8"
+              name="content"
               placeholder="내용 입력"
             ></textarea>
           </div>
@@ -61,9 +66,8 @@
       </div>
       <div class="btn-wrap">
         <button class="btn-add">등록</button>
-        <a href="index.html" class="btn-cancel">취소</a>
+        <a href="/posts" class="btn-cancel">취소</a>
       </div>
     </form>
-    <script src="public/scripts/write.js" defer></script>
   </body>
 </html>

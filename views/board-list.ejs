@@ -23,7 +23,7 @@
           </div>
         </div>
         <% if (!posts || posts.length === 0) { %>
-        <p>게시글이 없습니다. 게시글을 추가해보세요.</p>
+        <p id="post-none">게시글이 없습니다. 게시글을 추가해보세요.</p>
         <% } else { %>
         <div class="board-list" id="board-list-table">
           <% for(const post of posts) { %> <%- include('includes/post', { post:
@@ -36,6 +36,5 @@
         </div>
       </div>
     </div>
-    <script src="public/scripts/write.js" defer></script>
   </body>
 </html>

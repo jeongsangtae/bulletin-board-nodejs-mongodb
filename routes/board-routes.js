@@ -21,22 +21,50 @@ router.get("/posts", async function (req, res) {
   res.render("board-list", { posts: posts });
 });
 
-// router.get("/new-post", async function (req, res) {
-//   const users = await db.getDb().collection("users").find().toArray();
-//   res.render("create-post", { users: users });
-// });
+router.get("/create-post", function (req, res) {
+  res.render("create-post");
+});
 
 router.post("/posts", async function (req, res) {
+  // 가장 최근 게시물 불러오기
+  const lastPost = await db
+    .getDb()
+    .collection("posts")
+    .findOne({}, { sort: { num: -1 } });
+
+  // num이 존재하지 않으면 1로 초기화
+  let num = lastPost ? lastPost.num + 1 : 1;
+  let date = new Date();
   const newPost = {
-    num: req.body.num,
+    num: num,
     title: req.body.title,
     writer: req.body.writer,
     password: req.body.password,
     content: req.body.content,
-    date: new Date(),
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
   };
 
   const result = await db.getDb().collection("posts").insertOne(newPost);
   console.log(result);
   res.redirect("/posts");
 });
+
+router.get("/posts/:id", async function (req, res) {
+  let postId = req.params.id;
+
+  try {
+    postId = new ObjectId(postId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  if (!post) {
+    return res.status(404).render("404");
+  }
+
+  res.render("post-content", { post: post });
+});
+
+module.exports = router;

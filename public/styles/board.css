@@ -125,3 +125,9 @@ a.on {
 .board-page .on:hover {
   background-color: rgb(40, 40, 40);
 }
+
+#post-none {
+  margin: 4rem;
+  font-size: 1.5rem;
+  text-align: center;
+}

@@ -8,10 +8,11 @@ const ObjectId = mongodb.ObjectId;
 const router = express.Router();
 
 router.get("/", function (req, res) {
-  res.render("posts");
+  res.redirect("/posts");
 });
 
 router.get("/posts", async function (req, res) {
+  // num, title, writer, date의 정보만 보여준다.
   const posts = await db
     .getDb()
     .collection("posts")

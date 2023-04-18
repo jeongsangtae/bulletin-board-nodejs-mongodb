@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head', { title: "게시글 내용" }) %>
+    <link rel="stylesheet" href="/styles/write-content.css" />
+  </head>
+  <body>
+    <%- include('includes/header') %>
+    <div class="main-container">
+      <div class="main-title">
+        <h1>게시글</h1>
+        <p>게시글을 작성해보세요.</p>
+      </div>
+      <div class="board-view-container">
+        <div class="board-view" id="board-view-content">
+          <div class="board-title"><%= post.title %></div>
+          <div class="board-info">
+            <div class="board-info-lists">
+              <div class="board-info-list">번호</div>
+              <div class="board-info-num"><%= post.num %></div>
+            </div>
+            <div class="board-info-lists">
+              <div class="board-info-list">글쓴이</div>
+              <div class="board-info-writer"><%= post.writer %></div>
+            </div>
+            <div class="board-info-lists">
+              <div class="board-info-list">작성일</div>
+              <div class="board-info-date"><%= post.date %></div>
+            </div>
+            <div class="board-info-lists">
+              <div class="board-info-list">조회</div>
+              <div class="board-info-views"></div>
+            </div>
+          </div>
+          <div class="board-content"><%= post.content %></div>
+        </div>
+        <div class="btn-wrap" id="btn-wrap-edit">
+          <a href="/posts" class="btn-list">목록</a>
+          <button id="btn-editpage">수정</button>
+          <button id="btn-delete">삭제</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -53,6 +53,12 @@
   border: 1px solid rgb(217, 205, 205);
 }
 
+#btn-editpage:hover {
+  color: rgb(54, 46, 46);
+  background-color: rgb(200, 200, 200);
+  border: 1px solid rgb(217, 205, 205);
+}
+
 #btn-delete {
   background-color: red;
   color: white;

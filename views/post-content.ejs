@@ -29,14 +29,14 @@
             </div>
             <div class="board-info-lists">
               <div class="board-info-list">조회</div>
-              <div class="board-info-views"></div>
+              <div class="board-info-views"><%= post.count %></div>
             </div>
           </div>
           <div class="board-content"><%= post.content %></div>
         </div>
         <div class="btn-wrap" id="btn-wrap-edit">
           <a href="/posts" class="btn-list">목록</a>
-          <button id="btn-editpage">수정</button>
+          <a href="/posts/<%= post._id %>/edit" id="btn-editpage">수정</a>
           <button id="btn-delete">삭제</button>
         </div>
       </div>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head', { title: "글 수정" }) %>
+    <link rel="stylesheet" href="/styles/write.css" />
+  </head>
+
+  <body>
+    <%- include('includes/header') %>
+    <form
+      action="/posts/<%= post._id %>/edit"
+      method="POST"
+      class="main-container"
+      id="main-write-container"
+    >
+      <div class="main-title">
+        <h1>게시글</h1>
+        <p>게시글을 작성해보세요.</p>
+      </div>
+      <div class="board-write-container">
+        <div class="board-write">
+          <div class="write-title">
+            <label for="title-input">제목</label>
+            <input
+              type="text"
+              id="title-input"
+              required
+              name="title"
+              value="<%= post.title %>"
+              placeholder="제목 입력"
+            />
+          </div>
+          <div class="write-info">
+            <div>
+              <label for="info-write">글쓴이</label>
+              <input
+                type="text"
+                id="info-writer"
+                required
+                name="writer"
+                value="<%= post.writer %>"
+                placeholder="글쓴이 입력"
+              />
+            </div>
+            <div>
+              <label for="info-password">비밀번호</label>
+              <input
+                type="password"
+                id="info-password"
+                autocomplete=""
+                required
+                name="password"
+                value="<%= post.password %>"
+                placeholder="비밀번호 입력"
+              />
+            </div>
+          </div>
+          <div class="write-content">
+            <textarea
+              type="text"
+              id="content-textarea"
+              required
+              rows="8"
+              name="content"
+              placeholder="내용 입력"
+            >
+<%= post.content %></textarea
+            >
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn-add">수정</button>
+        <a href="/posts/<%= post._id %>" class="btn-cancel">취소</a>
+      </div>
+    </form>
+  </body>
+</html>

@@ -36,8 +36,14 @@
         </div>
         <div class="btn-wrap" id="btn-wrap-edit">
           <a href="/posts" class="btn-list">목록</a>
-          <a href="/posts/<%= post._id %>/edit" id="btn-editpage">수정</a>
-          <button id="btn-delete">삭제</button>
+          <a
+            href="/posts/<%= post._id %>/edit?disableCount=true"
+            id="btn-editpage"
+            >수정</a
+          >
+          <form action="/posts/<%= post._id %>/delete" method="POST">
+            <button id="btn-delete">삭제</button>
+          </form>
         </div>
       </div>
     </div>

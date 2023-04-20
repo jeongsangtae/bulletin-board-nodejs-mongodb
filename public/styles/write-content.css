@@ -63,6 +63,7 @@
   background-color: red;
   color: white;
   border: none;
+  border: 1px solid red;
 }
 
 #btn-delete:hover {

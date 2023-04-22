@@ -5,8 +5,21 @@ main {
 
 main h1 {
   margin-bottom: 0.5rem;
+  margin-left: 0.6rem;
 }
 
 main p {
-  margin-bottom: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.2rem;
+  margin-left: 0.6rem;
+}
+
+main a {
+  background-color: black;
+  color: white;
+  margin-left: 10px;
+  padding: 0.5rem 2rem;
+  font-size: 0.9rem;
+  border: 1px solid black;
+  border-radius: 4px;
 }

@@ -12,15 +12,24 @@ router.get("/", function (req, res) {
 });
 
 router.get("/posts", async function (req, res) {
-  // num, title, writer, date의 정보만 보여준다.
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 5;
   const posts = await db
     .getDb()
     .collection("posts")
     .find({})
     .sort({ num: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
     .project({ num: 1, title: 1, writer: 1, date: 1, count: 1 })
     .toArray();
-  res.render("board-list", { posts: posts });
+  const countPosts = await db.getDb().collection("posts").countDocuments({});
+  const totalPages = Math.ceil(countPosts / pageSize);
+  res.render("board-list", {
+    posts: posts,
+    page: page,
+    totalPages: totalPages,
+  });
 });
 
 router.get("/create-post", function (req, res) {
@@ -111,10 +120,20 @@ router.post("/posts/:id/edit", async function (req, res) {
 
 router.post("/posts/:id/delete", async function (req, res) {
   const postId = req.params.id;
+  const post = await db
+    .getDb()
+    .collection("posts")
+    .findOne({ _id: new ObjectId(postId) });
+
   await db
     .getDb()
     .collection("posts")
     .deleteOne({ _id: new ObjectId(postId) });
+
+  await db
+    .getDb()
+    .collection("posts")
+    .updateMany({ num: { $gt: post.num } }, { $inc: { num: -1 } });
 
   res.redirect("/posts");
 });

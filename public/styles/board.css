@@ -75,11 +75,12 @@
 }
 
 .board-page a {
+  color: black;
   display: inline-block;
   width: 32px;
   height: 32px;
   box-sizing: border-box;
-  border: 1px solid rgb(221, 221, 221);
+  /* border: 1px solid rgb(221, 221, 221); */
   border-left: 0;
   vertical-align: middle;
   line-height: 100%;
@@ -98,7 +99,7 @@
   cursor: pointer;
 }
 
-.board-page .first,
+.board-page .prev,
 .board-page .next,
 .board-page .btn-num,
 .board-page .end {
@@ -109,24 +110,34 @@
 
 a.on {
   border-color: black;
+  /* border: 1px solid rgb(221, 221, 221); */
   background-color: black;
   color: white;
+  /* color: rgb(16, 212, 16); */
 }
 
 .board-page .start:hover,
-.board-page .first:hover,
+.board-page .prev:hover,
 .board-page .next:hover,
 .board-page .end:hover,
 .board-page .btn-num:hover {
+  text-decoration: underline;
   background-color: rgb(230, 230, 230);
 }
 
 .board-page .on:hover {
   background-color: rgb(40, 40, 40);
+  text-decoration: none;
 }
 
 #post-none {
   margin: 4rem;
   font-size: 1.5rem;
   text-align: center;
+}
+
+.disabled {
+  display: none
+  /* opacity: 0.5;
+  pointer-events: none */
 }

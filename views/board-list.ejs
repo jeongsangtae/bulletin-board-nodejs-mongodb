@@ -29,7 +29,31 @@
           <% for(const post of posts) { %> <%- include('includes/post', { post:
           post }) %> <% } %>
         </div>
-        <div class="board-page" id="board-list-page"></div>
+        <div class="board-page" id="board-list-page">
+          <% if (totalPages > 1) { %>
+            <% if (page > 1) { %>
+              <a href="/posts?page=1" class="start btn-start"><<</a>
+              <a href="/posts?page=<%= page - 1 %>" class="prev btn-prev">이전</a>
+            <% } else { %>
+              <span class="start btn-start disabled"><<</span>
+              <span class="prev btn-prev disabled">이전</span>
+            <% } %>
+            <% for (let i=1; i <= totalPages; i++) { %>
+              <% if (page === i) { %>
+                <a href="/posts?page=<%= i %>" class="btn btn-num on"><%= i %></a>
+              <% } else { %>
+                <a href="/posts?page=<%= i %>" class="btn btn-num"><%= i %></a>
+              <% } %>
+            <% } %>
+            <% if (page < totalPages) { %>
+              <a href="/posts?page=<%= page + 1 %>" class="next btn-next">다음</a>
+              <a href="/posts?page=<%= totalPages %>" class="end btn-end">>></a>
+            <% } else { %>
+              <span class="next btn-next disabled">다음</span>
+              <span class="end btn-end disabled">>></span>
+            <% } %>
+          <% } %>
+        </div>
         <% } %>
         <div class="btn-wrap">
           <a href="/create-post" class="btn-add">등록</a>

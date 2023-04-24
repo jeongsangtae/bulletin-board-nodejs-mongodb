@@ -38,6 +38,7 @@
               <span class="start btn-start disabled"><<</span>
               <span class="prev btn-prev disabled">이전</span>
             <% } %>
+            
             <% for (let i=1; i <= totalPages; i++) { %>
               <% if (page === i) { %>
                 <a href="/posts?page=<%= i %>" class="btn btn-num on"><%= i %></a>
@@ -45,6 +46,7 @@
                 <a href="/posts?page=<%= i %>" class="btn btn-num"><%= i %></a>
               <% } %>
             <% } %>
+
             <% if (page < totalPages) { %>
               <a href="/posts?page=<%= page + 1 %>" class="next btn-next">다음</a>
               <a href="/posts?page=<%= totalPages %>" class="end btn-end">>></a>
@@ -52,6 +54,8 @@
               <span class="next btn-next disabled">다음</span>
               <span class="end btn-end disabled">>></span>
             <% } %>
+          <% } else { %>
+            <a href="/posts?page=1" class="btn btn-num on">1</a>
           <% } %>
         </div>
         <% } %>

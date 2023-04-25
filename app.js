@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 
 const boardRoutes = require("./routes/board-routes");
+const userRoutes = require("./routes/user-routes");
 const db = require("./data/database");
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(boardRoutes);
+app.use(userRoutes);
 
 app.use(function (error, req, res, next) {
   console.log(error);

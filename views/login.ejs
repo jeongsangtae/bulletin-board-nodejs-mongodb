@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('includes/head', { title: "로그인" }) %>
+  </head>
+
+  <body>
+    <%- include('includes/header') %>
+    <form
+      action="/login"
+      method="POST"
+      class="main-container"
+      id="main-write-container"
+    >
+      <div class="main-title">
+        <h1>로그인</h1>
+        <p>로그인을 해보세요.</p>
+      </div>
+      <div class="board-write-container">
+        <div class="board-write">
+          <div class="write-title">
+            <label for="email">이메일</label>
+            <input type="email" id="email" required name="email" value="" />
+          </div>
+          <div>
+            <label for="password">비밀번호</label>
+            <input
+              type="password"
+              id="password"
+              required
+              name="password"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn-add">로그인</button>
+        <a href="/" class="btn-cancel">취소</a>
+      </div>
+      <a href="/signup" class="btn-signup">회원가입 하러가기</a>
+    </form>
+  </body>
+</html>

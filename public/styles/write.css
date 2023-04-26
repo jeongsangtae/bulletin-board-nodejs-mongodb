@@ -60,6 +60,11 @@ textarea:focus {
   box-sizing: border-box;
 }
 
+/* .board-write .write-title input:focus,
+.board-write .write-info input:focus {
+  background-color: rgb(245, 232, 255);
+} */
+
 .board-write .write-title input {
   width: 75.3%;
 }
@@ -79,6 +84,10 @@ textarea:focus {
   font-size: 1rem;
   line-height: 140%;
 }
+
+/* .board-write .write-content textarea:focus {
+  background-color: rgb(245, 232, 255);
+} */
 
 .btn-cancel {
   color: rgb(54, 46, 46);

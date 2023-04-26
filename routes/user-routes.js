@@ -11,7 +11,21 @@ router.get("/signup", function (req, res) {
   res.render("signup");
 });
 
-router.post("/signup", function (req, res) {});
+router.post("/signup", async function (req, res) {
+  const userData = req.body;
+  const signUpEmail = userData.email;
+  const signUpConfirmEmail = userData["confirm-email"];
+  const signUpPassword = userData.password;
+
+  const user = {
+    email: signUpEmail,
+    password: signUpPassword,
+  };
+
+  await db.getDb().collection("users").insertOne(user);
+
+  res.redirect("/login");
+});
 
 router.get("/login", function (req, res) {
   res.render("login");

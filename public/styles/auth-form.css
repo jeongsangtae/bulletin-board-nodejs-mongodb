@@ -1,0 +1,29 @@
+label {
+  display: block;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  color: rgb(78, 73, 73);
+}
+
+/* input:focus {
+  background-color: rgb(245, 232, 255);
+} */
+
+.btn-wrap {
+  margin-top: 1rem;
+}
+
+.main-title {
+  margin-bottom: 1rem;
+}
+
+.main-title h1 {
+  margin: 1.3rem auto;
+}

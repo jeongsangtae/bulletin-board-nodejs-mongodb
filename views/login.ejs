@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <%- include('includes/head', { title: "로그인" }) %>
+    <link rel="stylesheet" href="/styles/auth-form.css" />
+    <link rel="stylesheet" href="/styles/auth.css" />
   </head>
 
   <body>
@@ -12,33 +14,45 @@
       class="main-container"
       id="main-write-container"
     >
-      <div class="main-title">
-        <h1>로그인</h1>
-        <p>로그인을 해보세요.</p>
-      </div>
-      <div class="board-write-container">
-        <div class="board-write">
-          <div class="write-title">
-            <label for="email">이메일</label>
-            <input type="email" id="email" required name="email" value="" />
-          </div>
-          <div>
-            <label for="password">비밀번호</label>
-            <input
-              type="password"
-              id="password"
-              required
-              name="password"
-              value=""
-            />
+      <div class="auth-form">
+        <div class="main-title">
+          <h1>로그인</h1>
+          <!-- <p>로그인을 해보세요.</p> -->
+        </div>
+        <div class="board-write-container">
+          <div class="board-write">
+            <div class="write-title">
+              <label for="email">이메일</label>
+              <input
+                type="email"
+                id="email"
+                required
+                name="email"
+                value=""
+                placeholder="이메일 입력"
+              />
+            </div>
+            <div>
+              <label for="password">비밀번호</label>
+              <input
+                type="password"
+                id="password"
+                required
+                name="password"
+                value=""
+                placeholder="비밀번호 입력"
+              />
+            </div>
           </div>
         </div>
+        <div class="btn-wrap">
+          <button class="btn-add">로그인</button>
+          <a href="/" class="btn-cancel">취소</a>
+        </div>
+        <div class="auth-alternative">
+          <a href="/signup" class="btn-auth">회원가입 하러가기</a>
+        </div>
       </div>
-      <div class="btn-wrap">
-        <button class="btn-add">로그인</button>
-        <a href="/" class="btn-cancel">취소</a>
-      </div>
-      <a href="/signup" class="btn-signup">회원가입 하러가기</a>
     </form>
   </body>
 </html>

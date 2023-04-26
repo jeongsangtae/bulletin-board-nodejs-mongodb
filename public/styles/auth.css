@@ -1,0 +1,21 @@
+.auth-form {
+  max-width: 25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  /* border: 1px solid black; */
+  border-radius: 6px;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.auth-alternative {
+  margin-top: 1rem;
+}
+
+.btn-auth {
+  color: rgb(34, 4, 68);
+}
+
+.btn-auth:hover {
+  color: rgb(127, 20, 214);
+}

@@ -1,28 +1,24 @@
 const path = require("path");
 
 const express = require("express");
-const session = require("express-session");
-const mongodbStore = require("connect-mongodb-session");
+const expressSession = require("express-session");
 
+const createSessionConfig = require("./config/session");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 const db = require("./data/database");
 
-const MongoDBStore = mongodbStore(session);
-
 const app = express();
-
-// const sessionStore = new MongoDBStore({
-//   uri: "mongodb://127.0.0.1:27017",
-//   databaseName: "bulletin-board",
-//   collection: "sessions",
-// })
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+const sessionConfig = createSessionConfig();
+
+app.use(expressSession(sessionConfig));
 
 app.use(boardRoutes);
 app.use(userRoutes);

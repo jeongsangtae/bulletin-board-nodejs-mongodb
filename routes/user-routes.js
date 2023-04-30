@@ -96,7 +96,17 @@ router.post("/login", async function (req, res) {
 });
 
 router.get("/profile", function (req, res) {
+  if (!req.session.isAuthenticated) {
+    return res.status(401).render("401");
+  }
+
   res.render("profile");
+});
+
+router.post("/logout", function (req, res) {
+  req.session.user = null;
+  req.session.isAuthenticated = false;
+  res.redirect("/");
 });
 
 module.exports = router;

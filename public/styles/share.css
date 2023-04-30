@@ -34,6 +34,12 @@ a {
   margin-left: 4rem;
 }
 
+button.menu-item {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .menu-item:hover {
   color: rgb(173, 201, 18);
 }

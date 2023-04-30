@@ -85,8 +85,14 @@ router.post("/login", async function (req, res) {
     return res.redirect("/login");
   }
 
-  console.log("사용자 인증되었습니다.");
-  res.redirect("/");
+  req.session.user = {
+    id: existingLoginUser._id,
+    email: existingLoginUser.email,
+  };
+  req.session.isAuthenticated = true;
+  req.session.save(function () {
+    res.redirect("/profile");
+  });
 });
 
 router.get("/profile", function (req, res) {

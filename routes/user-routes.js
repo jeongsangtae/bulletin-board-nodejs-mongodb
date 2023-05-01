@@ -6,7 +6,20 @@ const db = require("../data/database");
 const router = express.Router();
 
 router.get("/signup", function (req, res) {
-  res.render("signup");
+  let sessionSignUpInputData = req.session.inputData;
+
+  if (!sessionSignUpInputData) {
+    sessionSignUpInputData = {
+      hasError: false,
+      email: "",
+      confirmEmail: "",
+      password: "",
+    };
+  }
+
+  req.session.inputData = null;
+
+  res.render("signup", { inputData: sessionSignUpInputData });
 });
 
 // 가입한 이메일, 패스워드를 mongodb에 저장
@@ -25,8 +38,18 @@ router.post("/signup", async function (req, res) {
     signUpEmail !== signUpConfirmEmail ||
     !signUpEmail.includes("@")
   ) {
-    console.log("잘못된 정보가 입력되었습니다.");
-    return res.redirect("/signup");
+    req.session.inputData = {
+      hasError: true,
+      message: "잘못된 입력입니다. 다시 입력해주세요.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      password: signUpPassword,
+    };
+
+    req.session.save(function () {
+      res.redirect("/signup");
+    });
+    return;
   }
 
   const existingSignUpUser = await db
@@ -54,7 +77,19 @@ router.post("/signup", async function (req, res) {
 });
 
 router.get("/login", function (req, res) {
-  res.render("login");
+  let sessionLoginInputData = req.session.inputData;
+
+  if (!sessionLoginInputData) {
+    sessionLoginInputData = {
+      hasError: false,
+      email: "",
+      password: "",
+    };
+  }
+
+  req.session.inputData = null;
+
+  res.render("login", { inputData: sessionLoginInputData });
 });
 
 // mongodb에서 입력한 이메일이 존재하는지 확인
@@ -70,8 +105,16 @@ router.post("/login", async function (req, res) {
 
   // 이메일이 존재하는지 확인
   if (!existingLoginUser) {
-    console.log("로그인할 수 없습니다. 존재하지 않는 이메일입니다.");
-    return res.redirect("/login");
+    req.session.inputData = {
+      hasError: true,
+      message: "로그인할 수 없습니다. 존재하지 않는 이메일입니다.",
+      email: loginEmail,
+      password: loginPassword,
+    };
+    req.session.save(function () {
+      res.redirect("/login");
+    });
+    return;
   }
 
   const passwordEqual = await bcrypt.compare(
@@ -81,8 +124,16 @@ router.post("/login", async function (req, res) {
 
   // 해싱되기전 비밀번호와 해싱된 후 비밀번호를 비교해 일치하는지 확인
   if (!passwordEqual) {
-    console.log("로그인할 수 없습니다. 패스워드가 틀렸습니다.");
-    return res.redirect("/login");
+    req.session.inputData = {
+      hasError: true,
+      message: "로그인할 수 없습니다. 패스워드가 틀렸습니다.",
+      email: loginEmail,
+      password: loginPassword,
+    };
+    req.session.save(function () {
+      res.redirect("/login");
+    });
+    return;
   }
 
   req.session.user = {

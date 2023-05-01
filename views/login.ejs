@@ -17,7 +17,9 @@
       <div class="auth-form">
         <div class="main-title">
           <h1>로그인</h1>
-          <!-- <p>로그인을 해보세요.</p> -->
+          <% if (inputData.hasError) { %>
+          <p class="input-error"><%= inputData.message %></p>
+          <% } %>
         </div>
         <div class="board-write-container">
           <div class="board-write">
@@ -28,7 +30,7 @@
                 id="email"
                 required
                 name="email"
-                value=""
+                value="<%= inputData.email %>"
                 placeholder="이메일 입력"
               />
             </div>
@@ -39,7 +41,7 @@
                 id="password"
                 required
                 name="password"
-                value=""
+                value="<%= inputData.password %>"
                 placeholder="비밀번호 입력"
               />
             </div>

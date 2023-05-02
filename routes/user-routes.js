@@ -59,8 +59,17 @@ router.post("/signup", async function (req, res) {
 
   // 이메일이 이미 존재하는지 확인해 다른 이메일을 입력하도록 한다.
   if (existingSignUpUser) {
-    console.log("해당 이메일은 이미 사용중입니다.");
-    return res.redirect("/signup");
+    req.session.inputData = {
+      hasError: true,
+      message: "해당 이메일은 이미 사용중입니다.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      password: signUpPassword,
+    };
+    req.session.save(function () {
+      res.redirect("/signup");
+    });
+    return;
   }
 
   // 비밀번호 해싱

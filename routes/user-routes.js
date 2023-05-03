@@ -156,7 +156,7 @@ router.post("/login", async function (req, res) {
 });
 
 router.get("/profile", function (req, res) {
-  if (!req.session.isAuthenticated) {
+  if (!res.locals.isAuth) {
     return res.status(401).render("401");
   }
 

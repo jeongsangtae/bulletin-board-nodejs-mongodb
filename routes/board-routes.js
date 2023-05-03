@@ -36,6 +36,9 @@ router.get("/posts", async function (req, res) {
 });
 
 router.get("/create-post", function (req, res) {
+  if (!res.locals.isAuth) {
+    return res.status(401).render("401");
+  }
   res.render("create-post");
 });
 

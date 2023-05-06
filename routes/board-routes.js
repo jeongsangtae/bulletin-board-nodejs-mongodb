@@ -35,19 +35,18 @@ router.get("/posts", async function (req, res) {
   });
 });
 
-router.get("/create-post", function (req, res) {
-  if (!res.locals.isAuth) {
-    return res.status(401).render("401");
-  }
-  res.render("create-post");
-});
-
 router.post("/posts", async function (req, res) {
   // 가장 최근 게시물 불러오기
   const lastPost = await db
     .getDb()
     .collection("posts")
     .findOne({}, { sort: { num: -1 } });
+
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
 
   // num이 존재하지 않으면 1로 초기화
   let num = lastPost ? lastPost.num + 1 : 1;
@@ -61,11 +60,19 @@ router.post("/posts", async function (req, res) {
     content: req.body.content,
     count: count,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
+    email: user.email,
   };
 
   const result = await db.getDb().collection("posts").insertOne(newPost);
   console.log(result);
   res.redirect("/posts");
+});
+
+router.get("/create-post", function (req, res) {
+  if (!res.locals.isAuth) {
+    return res.status(401).render("401");
+  }
+  res.render("create-post");
 });
 
 router.get("/posts/:id", async function (req, res) {

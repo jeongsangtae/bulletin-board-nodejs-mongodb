@@ -151,16 +151,45 @@ router.post("/login", async function (req, res) {
   };
   req.session.isAuthenticated = true;
   req.session.save(function () {
-    res.redirect("/profile");
+    res.redirect("/");
   });
 });
 
-router.get("/profile", function (req, res) {
+router.get("/profile", async function (req, res) {
   if (!res.locals.isAuth) {
     return res.status(401).render("401");
   }
 
-  res.render("profile");
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 5;
+  // const pageButton = 5;
+  const posts = await db
+    .getDb()
+    .collection("posts")
+    .find({ email: userEmail })
+    .sort({ num: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .project({ num: 1, title: 1, writer: 1, date: 1, count: 1 })
+    .toArray();
+  const countPosts = await db
+    .getDb()
+    .collection("posts")
+    .countDocuments({ email: userEmail });
+  const totalPages = Math.ceil(countPosts / pageSize);
+
+  res.render("profile", {
+    posts: posts,
+    user: user,
+    page: page,
+    totalPages: totalPages,
+  });
 });
 
 router.post("/logout", function (req, res) {

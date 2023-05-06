@@ -7,7 +7,68 @@
 
   <body>
     <%- include('includes/header') %>
-    <h1>나의 게시글 목록</h1>
-    <p>게시글을 확인해보세요.</p>
+    <div class="main-container">
+      <div class="main-title">
+        <h1><%= user.email %>의 게시글 목록</h1>
+        <p>게시글을 확인해보세요.</p>
+      </div>
+      <div class="board-list-container">
+        <div class="board-list-top">
+          <div class="board-top">
+            <div class="board-num">번호</div>
+            <div class="board-title">제목</div>
+            <div class="board-writer">글쓴이</div>
+            <div class="board-date">작성일</div>
+            <div class="board-count">조회</div>
+          </div>
+        </div>
+        <% if (!posts || posts.length === 0) { %>
+        <p id="post-none">게시글이 없습니다. 게시글을 추가해보세요.</p>
+        <% } else { %>
+        <div class="board-list" id="board-list-table">
+          <% for(const post of posts) { %> <%- include('includes/post', { post:
+          post }) %> <% } %>
+        </div>
+        <div class="board-page" id="board-list-page">
+          <% if (totalPages > 1) { %>
+            <% if (page > 1) { %>
+              <a href="/profile?page=1" class="start btn-start"><<</a>
+              <a href="/profile?page=<%= page - 1 %>" class="prev btn-prev">이전</a>
+            <% } else { %>
+              <span class="start btn-start disabled"><<</span>
+              <span class="prev btn-prev disabled">이전</span>
+            <% } %>
+            
+            <% for (let i=1; i <= totalPages; i++) { %>
+              <% if (page === i) { %>
+                <a href="/profile?page=<%= i %>" class="btn btn-num on"><%= i %></a>
+              <% } else { %>
+                <a href="/profile?page=<%= i %>" class="btn btn-num"><%= i %></a>
+              <% } %>
+            <% } %>
+
+            <% if (page < totalPages) { %>
+              <a href="/profile?page=<%= page + 1 %>" class="next btn-next">다음</a>
+              <a href="/profile?page=<%= totalPages %>" class="end btn-end">>></a>
+            <% } else { %>
+              <span class="next btn-next disabled">다음</span>
+              <span class="end btn-end disabled">>></span>
+            <% } %>
+          <% } else { %>
+            <a href="/profile?page=1" class="btn btn-num on">1</a>
+          <% } %>
+        </div>
+        <% } %>
+        <% if (locals.isAuth) { %>
+        <div class="btn-wrap">
+          <a href="/create-post" class="btn-add">등록</a>
+        </div>
+        <% } else { %>
+          <div class="btn-wrap">
+            <a href="/login" class="btn-add">등록</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
   </body>
 </html>

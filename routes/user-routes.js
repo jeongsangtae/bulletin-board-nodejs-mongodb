@@ -13,6 +13,7 @@ router.get("/signup", function (req, res) {
       hasError: false,
       email: "",
       confirmEmail: "",
+      name: "",
       password: "",
     };
   }
@@ -28,11 +29,14 @@ router.post("/signup", async function (req, res) {
   const userData = req.body;
   const signUpEmail = userData.email;
   const signUpConfirmEmail = userData["confirm-email"];
+  const signUpName = userData.name;
   const signUpPassword = userData.password;
 
   if (
     !signUpEmail ||
     !signUpConfirmEmail ||
+    !signUpName ||
+    signUpName.trim().length > 6 ||
     !signUpPassword ||
     signUpPassword.trim().length < 6 ||
     signUpEmail !== signUpConfirmEmail ||
@@ -43,6 +47,7 @@ router.post("/signup", async function (req, res) {
       message: "잘못된 입력입니다. 다시 입력해주세요.",
       email: signUpEmail,
       confirmEmail: signUpConfirmEmail,
+      name: signUpName,
       password: signUpPassword,
     };
 
@@ -64,6 +69,7 @@ router.post("/signup", async function (req, res) {
       message: "해당 이메일은 이미 사용중입니다.",
       email: signUpEmail,
       confirmEmail: signUpConfirmEmail,
+      name: signUpName,
       password: signUpPassword,
     };
     req.session.save(function () {
@@ -77,6 +83,7 @@ router.post("/signup", async function (req, res) {
 
   const user = {
     email: signUpEmail,
+    name: signUpName,
     password: hashPassword,
   };
 
@@ -92,6 +99,7 @@ router.get("/login", function (req, res) {
     sessionLoginInputData = {
       hasError: false,
       email: "",
+      name: "",
       password: "",
     };
   }
@@ -147,6 +155,7 @@ router.post("/login", async function (req, res) {
 
   req.session.user = {
     id: existingLoginUser._id,
+    name: existingLoginUser.name,
     email: existingLoginUser.email,
   };
   req.session.isAuthenticated = true;

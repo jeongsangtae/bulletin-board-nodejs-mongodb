@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const mongodb = require("mongodb");
 
 const db = require("../data/database");
@@ -63,16 +64,29 @@ router.post("/posts", async function (req, res) {
     email: user.email,
   };
 
+  const passwordEqual = await bcrypt.compare(newPost.password, user.password);
+
+  if (!passwordEqual) {
+    return res.render("500");
+  }
+
   const result = await db.getDb().collection("posts").insertOne(newPost);
   console.log(result);
   res.redirect("/posts");
 });
 
-router.get("/create-post", function (req, res) {
+router.get("/create-post", async function (req, res) {
   if (!res.locals.isAuth) {
     return res.status(401).render("401");
   }
-  res.render("create-post");
+
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  res.render("create-post", { user: user });
 });
 
 router.get("/posts/:id", async function (req, res) {

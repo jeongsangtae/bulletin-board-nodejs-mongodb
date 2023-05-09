@@ -49,25 +49,33 @@ router.post("/posts", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
+  const titleInput = req.body.title;
+  const passwordInput = req.body.password;
+  const contentInput = req.body.content;
+
   // num이 존재하지 않으면 1로 초기화
   let num = lastPost ? lastPost.num + 1 : 1;
   let date = new Date();
   let count = 0;
   const newPost = {
     num: num,
-    title: req.body.title,
+    title: titleInput,
     writer: req.body.writer,
-    password: req.body.password,
-    content: req.body.content,
+    content: contentInput,
     count: count,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
     email: user.email,
   };
 
-  const passwordEqual = await bcrypt.compare(newPost.password, user.password);
+  const passwordEqual = await bcrypt.compare(passwordInput, user.password);
 
   if (!passwordEqual) {
-    return res.render("500");
+    console.log("비밀번호가 틀렸습니다.");
+    return res.render("create-post", {
+      user: user,
+      title: titleInput,
+      content: contentInput,
+    });
   }
 
   const result = await db.getDb().collection("posts").insertOne(newPost);
@@ -86,7 +94,7 @@ router.get("/create-post", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
-  res.render("create-post", { user: user });
+  res.render("create-post", { user: user, title: "", content: "" });
 });
 
 router.get("/posts/:id", async function (req, res) {

@@ -73,5 +73,14 @@
         <a href="/posts" class="btn-cancel">취소</a>
       </div>
     </form>
+    <% if (errorMessage) { %>
+    <div id="password-error-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p class="error-message"><%= errorMessage %></p>
+      </div>
+    </div>
+    <% } %>
+    <script defer src="/scripts/modal.js"></script>
   </body>
 </html>

@@ -62,6 +62,7 @@ router.post("/posts", async function (req, res) {
     title: titleInput,
     writer: req.body.writer,
     content: contentInput,
+    // password: user.password,
     count: count,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
     email: user.email,
@@ -75,6 +76,7 @@ router.post("/posts", async function (req, res) {
       user: user,
       title: titleInput,
       content: contentInput,
+      errorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
     });
   }
 
@@ -94,7 +96,12 @@ router.get("/create-post", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
-  res.render("create-post", { user: user, title: "", content: "" });
+  res.render("create-post", {
+    user: user,
+    title: "",
+    content: "",
+    errorMessage: "",
+  });
 });
 
 router.get("/posts/:id", async function (req, res) {

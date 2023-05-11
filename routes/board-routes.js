@@ -76,7 +76,7 @@ router.post("/posts", async function (req, res) {
       user: user,
       title: titleInput,
       content: contentInput,
-      errorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
+      passwordErrorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
     });
   }
 
@@ -100,7 +100,7 @@ router.get("/create-post", async function (req, res) {
     user: user,
     title: "",
     content: "",
-    errorMessage: "",
+    passwordErrorMessage: "",
   });
 });
 
@@ -124,10 +124,17 @@ router.get("/posts/:id", async function (req, res) {
     .collection("posts")
     .updateOne({ _id: postId }, { $inc: { count: 1 } });
 
-  res.render("post-content", { post: post });
+  res.render("post-content", {
+    post: post,
+    editErrorMessage: "",
+    deleteErrorMessage: "",
+  });
 });
 
 router.get("/posts/:id/edit", async function (req, res) {
+  if (!res.locals.isAuth) {
+    return res.status(401).render("401");
+  }
   const postId = req.params.id;
   const post = await db
     .getDb()
@@ -141,6 +148,23 @@ router.get("/posts/:id/edit", async function (req, res) {
     return res.status(404).render("404");
   }
 
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  if (user.email !== post.email) {
+    if (!res.locals.isAuth) {
+      return res.status(401).render("401");
+    }
+    return res.render("post-content", {
+      post: post,
+      editErrorMessage: "권한이 없습니다. 본인의 게시글만 수정 가능합니다.",
+      deleteErrorMessage: "",
+    });
+  }
+
   res.render("update-post", { post: post });
 });
 
@@ -149,7 +173,6 @@ router.post("/posts/:id/edit", async function (req, res) {
   const updateData = {
     title: req.body.title,
     writer: req.body.writer,
-    password: req.body.password,
     content: req.body.content,
   };
 
@@ -161,11 +184,28 @@ router.post("/posts/:id/edit", async function (req, res) {
 });
 
 router.post("/posts/:id/delete", async function (req, res) {
+  if (!res.locals.isAuth) {
+    return res.status(401).render("401");
+  }
   const postId = req.params.id;
   const post = await db
     .getDb()
     .collection("posts")
     .findOne({ _id: new ObjectId(postId) });
+
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  if (user.email !== post.email) {
+    return res.render("post-content", {
+      post: post,
+      editErrorMessage: "",
+      deleteErrorMessage: "권한이 없습니다. 본인의 게시글만 삭제 가능합니다.",
+    });
+  }
 
   await db
     .getDb()

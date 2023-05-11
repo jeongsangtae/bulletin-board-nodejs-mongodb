@@ -101,8 +101,7 @@ textarea:focus {
   border: 1px solid rgb(217, 205, 205);
 }
 
-/* 모달창 */
-.modal {
+/* .modal {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -159,4 +158,4 @@ textarea:focus {
   .error-message {
     font-size: 1rem;
   }
-}
+} */

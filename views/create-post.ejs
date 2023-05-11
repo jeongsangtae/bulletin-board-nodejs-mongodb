@@ -3,6 +3,7 @@
   <head>
     <%- include('includes/head', { title: "글쓰기" }) %>
     <link rel="stylesheet" href="/styles/write.css" />
+    <link rel="stylesheet" href="/styles/modal.css" />
   </head>
 
   <body>
@@ -73,14 +74,14 @@
         <a href="/posts" class="btn-cancel">취소</a>
       </div>
     </form>
-    <% if (errorMessage) { %>
+    <% if (passwordErrorMessage) { %>
     <div id="password-error-modal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <p class="error-message"><%= errorMessage %></p>
+        <span id="password-error-close" class="close">&times;</span>
+        <p class="error-message"><%= passwordErrorMessage %></p>
       </div>
     </div>
     <% } %>
-    <script defer src="/scripts/modal.js"></script>
+    <script src="/scripts/password-modal.js"></script>
   </body>
 </html>

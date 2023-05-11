@@ -3,6 +3,7 @@
   <head>
     <%- include('includes/head', { title: "게시글 내용" }) %>
     <link rel="stylesheet" href="/styles/write-content.css" />
+    <link rel="stylesheet" href="/styles/modal.css" />
   </head>
   <body>
     <%- include('includes/header') %>
@@ -36,16 +37,31 @@
         </div>
         <div class="btn-wrap" id="btn-wrap-edit">
           <a href="/posts" class="btn-list">목록</a>
-          <a
-            href="/posts/<%= post._id %>/edit?disableCount=true"
-            id="btn-editpage"
-            >수정</a
-          >
+          <a href="/posts/<%= post._id %>/edit" id="btn-editpage">수정</a>
           <form action="/posts/<%= post._id %>/delete" method="POST">
             <button id="btn-delete">삭제</button>
           </form>
         </div>
       </div>
     </div>
+    <% if (editErrorMessage) { %>
+    <div id="edit-error-modal" class="modal">
+      <div class="modal-content">
+        <span id="edit-error-close" class="close">&times;</span>
+        <p class="error-message"><%= editErrorMessage %></p>
+      </div>
+    </div>
+    <% } %> 
+    
+    <% if (deleteErrorMessage) { %>
+    <div id="delete-error-modal" class="modal">
+      <div class="modal-content">
+        <span id="delete-error-close" class="close">&times;</span>
+        <p class="error-message"><%= deleteErrorMessage %></p>
+      </div>
+    </div>
+    <% } %>
+    <script defer src="/scripts/edit-modal.js"></script>
+    <script defer src="/scripts/delete-modal.js"></script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('includes/head', { title: "가입하기" }) %>
+    <%- include('includes/head', { title: "회원가입" }) %>
     <link rel="stylesheet" href="/styles/auth-form.css" />
     <link rel="stylesheet" href="/styles/auth.css" />
   </head>
@@ -16,7 +16,7 @@
     >
       <div class="auth-form">
         <div class="main-title">
-          <h1>가입하기</h1>
+          <h1>회원가입</h1>
           <% if (inputData.hasError) { %>
           <p class="input-error"><%= inputData.message %></p>
           <% } %>
@@ -75,7 +75,7 @@
           <a href="/" class="btn-cancel">취소</a>
         </div>
         <div class="auth-alternative">
-          <a href="/login" class="btn-auth">로그인 하러가기</a>
+          <a href="/login" class="btn-auth">로그인</a>
         </div>
       </div>
     </form>

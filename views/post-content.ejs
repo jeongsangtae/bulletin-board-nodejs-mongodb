@@ -21,7 +21,7 @@
               <div class="board-info-num"><%= post.num %></div>
             </div>
             <div class="board-info-lists">
-              <div class="board-info-list">글쓴이</div>
+              <div class="board-info-list">작성자</div>
               <div class="board-info-writer"><%= post.writer %></div>
             </div>
             <div class="board-info-lists">
@@ -37,31 +37,21 @@
         </div>
         <div class="btn-wrap" id="btn-wrap-edit">
           <a href="/posts" class="btn-list">목록</a>
+          <% if (user && user.email === post.email) { %>
           <a href="/posts/<%= post._id %>/edit" id="btn-editpage">수정</a>
           <form action="/posts/<%= post._id %>/delete" method="POST">
             <button id="btn-delete">삭제</button>
           </form>
+          <% } %>
         </div>
       </div>
     </div>
-    <% if (editErrorMessage) { %>
-    <div id="edit-error-modal" class="modal">
-      <div class="modal-content">
-        <span id="edit-error-close" class="close">&times;</span>
-        <p class="error-message"><%= editErrorMessage %></p>
-      </div>
-    </div>
-    <% } %> 
-    
-    <% if (deleteErrorMessage) { %>
-    <div id="delete-error-modal" class="modal">
-      <div class="modal-content">
-        <span id="delete-error-close" class="close">&times;</span>
-        <p class="error-message"><%= deleteErrorMessage %></p>
-      </div>
-    </div>
-    <% } %>
-    <script defer src="/scripts/edit-modal.js"></script>
-    <script defer src="/scripts/delete-modal.js"></script>
   </body>
 </html>
+
+<!-- <a href="/posts" class="btn-list">목록</a>
+          <a id="btn-editpage" class="disabled-opacity">수정</a>
+          <a id="btn-delete" class="disabled-opacity">삭제</a> -->
+
+<!-- <script defer src="/scripts/edit-modal.js"></script>
+    <script defer src="/scripts/delete-modal.js"></script> -->

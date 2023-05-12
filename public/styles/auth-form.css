@@ -12,9 +12,9 @@ input {
   color: rgb(78, 73, 73);
 }
 
-/* input:focus {
-  background-color: rgb(245, 232, 255);
-} */
+input:focus {
+  background-color: rgb(245, 245, 245);
+}
 
 .btn-wrap {
   margin-top: 1rem;

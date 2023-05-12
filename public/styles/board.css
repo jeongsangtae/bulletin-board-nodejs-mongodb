@@ -136,8 +136,4 @@ a.on {
   text-align: center;
 }
 
-.disabled {
-  display: none;
-  /* opacity: 0.5;
-  pointer-events: none */
-}
+

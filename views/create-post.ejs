@@ -55,6 +55,12 @@
               />
             </div>
           </div>
+          <% if (passwordErrorMessage) { %>
+          <div class="password-error-message">
+            <p><%= passwordErrorMessage %></p>
+          </div>
+          <div class="line"></div>
+          <% } %>
           <div class="write-content">
             <textarea
               type="text"
@@ -74,14 +80,14 @@
         <a href="/posts" class="btn-cancel">취소</a>
       </div>
     </form>
-    <% if (passwordErrorMessage) { %>
+    <!-- 
     <div id="password-error-modal" class="modal">
       <div class="modal-content">
         <span id="password-error-close" class="close">&times;</span>
-        <p class="error-message"><%= passwordErrorMessage %></p>
+        <p class="error-message"></p>
       </div>
     </div>
-    <% } %>
-    <script src="/scripts/password-modal.js"></script>
+     -->
+    <!-- <script src="/scripts/password-modal.js"></script> -->
   </body>
 </html>

@@ -124,7 +124,11 @@ router.get("/posts/:id", async function (req, res) {
     .collection("posts")
     .updateOne({ _id: postId }, { $inc: { count: 1 } });
 
-  const user = req.session.user || null;
+  let user = null;
+  if (req.session.user && req.session.user.email) {
+    const userEmail = req.session.user.email;
+    user = await db.getDb().collection("users").findOne({ email: userEmail });
+  }
 
   res.render("post-content", {
     user: user,
@@ -145,11 +149,24 @@ router.get("/posts/:id/edit", async function (req, res) {
       { title: 1, writer: 1, password: 1, content: 1 }
     );
 
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
   if (!post) {
     return res.status(404).render("404");
   }
 
-  res.render("update-post", { post: post });
+  res.render("update-post", {
+    post: post,
+    user: user,
+    title: "",
+    content: "",
+    passwordErrorMessage: "",
+    passwordEqual: ""
+  });
 });
 
 router.post("/posts/:id/edit", async function (req, res) {
@@ -158,11 +175,41 @@ router.post("/posts/:id/edit", async function (req, res) {
   }
 
   const postId = req.params.id;
+  const post = await db
+    .getDb()
+    .collection("posts")
+    .findOne(
+      { _id: new ObjectId(postId) },
+      { title: 1, writer: 1, password: 1, content: 1 }
+    );
+
+  const titleInput = req.body.title;
+  const contentInput = req.body.content;
+  const passwordInput = req.body.password;
+
   const updateData = {
-    title: req.body.title,
-    writer: req.body.writer,
-    content: req.body.content,
+    title: titleInput,
+    content: contentInput,
   };
+
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  const passwordEqual = await bcrypt.compare(passwordInput, user.password);
+
+  if (!passwordEqual) {
+    return res.render("update-post", {
+      post: post,
+      user: user,
+      title: titleInput,
+      content: contentInput,
+      passwordErrorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
+      passwordEqual: false
+    });
+  }
 
   await db
     .getDb()

@@ -26,7 +26,7 @@
               id="title-input"
               required
               name="title"
-              value="<%= post.title %>"
+              value="<%= passwordEqual ? title : post.title %>"
               placeholder="제목 입력"
             />
           </div>
@@ -38,8 +38,9 @@
                 id="info-writer"
                 required
                 name="writer"
-                value="<%= post.writer %>"
+                value="<%= user.name %>"
                 placeholder="작성자 입력"
+                readonly
               />
             </div>
             <div>
@@ -50,7 +51,6 @@
                 autocomplete=""
                 required
                 name="password"
-                value="<%= post.password %>"
                 placeholder="비밀번호 입력"
               />
             </div>
@@ -64,7 +64,7 @@
               name="content"
               placeholder="내용 입력"
             >
-<%= post.content %></textarea
+<%= passwordEqual ? content : post.content %></textarea
             >
           </div>
         </div>

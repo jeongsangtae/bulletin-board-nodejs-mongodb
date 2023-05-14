@@ -1,30 +1,25 @@
-// const passwordErrorModal = document.getElementById("password-error-modal");
-// const passwordErrorClose = document.getElementById("password-error-close");
+const passwordErrorModal = document.getElementById("password-error-modal");
+const passwordErrorClose = document.getElementById("password-error-close");
 
-// const closeTimeout = 2000;
+function passwordErrorModalClose() {
+  passwordErrorModal.style.display = "none";
+}
 
-// function closeModal() {
-//   passwordErrorModal.style.display = "none";
-// }
+if (passwordErrorClose) {
+  passwordErrorClose.addEventListener("click", passwordErrorModalClose);
+}
 
-// setTimeout(closeModal, closeTimeout);
-
-// function passwordErrorModalClose() {
-//   passwordErrorModal.style.display = "none";
-// }
-
-// passwordErrorClose.addEventListener("click", passwordErrorModalClose);
 // console.log(passwordErrorClose);
 
-window.onload = function () {
-  const passwordErrorModal = document.getElementById("password-error-modal");
-  const passwordErrorClose = document.getElementById("password-error-close");
+// window.onload = function () {
+//   const passwordErrorModal = document.getElementById("password-error-modal");
+//   const passwordErrorClose = document.getElementById("password-error-close");
 
-  if (passwordErrorClose) {
-    passwordErrorClose.addEventListener("click", passwordErrorModalClose);
-  }
+//   if (passwordErrorClose) {
+//     passwordErrorClose.addEventListener("click", passwordErrorModalClose);
+//   }
 
-  function passwordErrorModalClose() {
-    passwordErrorModal.style.display = "none";
-  }
-};
+//   function passwordErrorModalClose() {
+//     passwordErrorModal.style.display = "none";
+//   }
+// };

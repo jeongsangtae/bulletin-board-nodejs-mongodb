@@ -124,13 +124,12 @@ button.menu-item {
 
 .disabled {
   display: none;
-  /* opacity: 0.5;
-  pointer-events: none */
 }
 
-.disabled-opacity {
-
-}
+/* .disabled-opacity {
+  opacity: 0.5;
+  pointer-events: none
+} */
 
 /* .menu-btn {
   width: 3rem;

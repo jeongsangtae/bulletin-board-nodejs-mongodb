@@ -140,6 +140,7 @@ router.get("/posts/:id/edit", async function (req, res) {
   if (!res.locals.isAuth) {
     return res.status(401).render("401");
   }
+
   const postId = req.params.id;
   const post = await db
     .getDb()
@@ -155,6 +156,10 @@ router.get("/posts/:id/edit", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
+  if (post.email !== user.email) {
+    return res.status(401).render("401");
+  }
+
   if (!post) {
     return res.status(404).render("404");
   }
@@ -165,7 +170,6 @@ router.get("/posts/:id/edit", async function (req, res) {
     title: "",
     content: "",
     passwordErrorMessage: "",
-    passwordEqual: ""
   });
 });
 
@@ -207,7 +211,6 @@ router.post("/posts/:id/edit", async function (req, res) {
       title: titleInput,
       content: contentInput,
       passwordErrorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
-      passwordEqual: false
     });
   }
 
@@ -222,6 +225,7 @@ router.post("/posts/:id/delete", async function (req, res) {
   if (!res.locals.isAuth) {
     return res.status(401).render("401");
   }
+
   const postId = req.params.id;
   const post = await db
     .getDb()

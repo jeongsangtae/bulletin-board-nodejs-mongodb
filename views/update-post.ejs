@@ -3,6 +3,7 @@
   <head>
     <%- include('includes/head', { title: "글 수정" }) %>
     <link rel="stylesheet" href="/styles/write.css" />
+    <link rel="stylesheet" href="/styles/modal.css" />
   </head>
 
   <body>
@@ -26,7 +27,7 @@
               id="title-input"
               required
               name="title"
-              value="<%= passwordEqual ? title : post.title %>"
+              value="<% if (passwordErrorMessage) { %><%= title %><% } else { %><%= post.title %><% } %>"
               placeholder="제목 입력"
             />
           </div>
@@ -64,7 +65,7 @@
               name="content"
               placeholder="내용 입력"
             >
-<%= passwordEqual ? content : post.content %></textarea
+<% if (passwordErrorMessage) { %><%= content %><% } else { %><%= post.content %><% } %></textarea
             >
           </div>
         </div>
@@ -74,5 +75,14 @@
         <a href="/posts/<%= post._id %>" class="btn-cancel">취소</a>
       </div>
     </form>
+    <% if (passwordErrorMessage) { %>
+    <div id="edit-password-error-modal" class="modal">
+      <div class="modal-content">
+        <span id="edit-password-error-close" class="close">&times;</span>
+        <p class="error-message"><%= passwordErrorMessage %></p>
+      </div>
+    </div>
+    <% } %>
+    <script defer src="/scripts/edit-password-modal.js"></script>
   </body>
 </html>

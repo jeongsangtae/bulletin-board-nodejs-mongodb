@@ -37,6 +37,9 @@ router.get("/posts", async function (req, res) {
 });
 
 router.post("/posts", async function (req, res) {
+  if (!req.session.user) {
+    return res.status(401).render("401");
+  }
   // 가장 최근 게시물 불러오기
   const lastPost = await db
     .getDb()
@@ -86,7 +89,7 @@ router.post("/posts", async function (req, res) {
 });
 
 router.get("/create-post", async function (req, res) {
-  if (!res.locals.isAuth) {
+  if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
   }
 
@@ -137,7 +140,7 @@ router.get("/posts/:id", async function (req, res) {
 });
 
 router.get("/posts/:id/edit", async function (req, res) {
-  if (!res.locals.isAuth) {
+  if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
   }
 
@@ -174,7 +177,7 @@ router.get("/posts/:id/edit", async function (req, res) {
 });
 
 router.post("/posts/:id/edit", async function (req, res) {
-  if (!res.locals.isAuth) {
+  if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
   }
 
@@ -222,7 +225,7 @@ router.post("/posts/:id/edit", async function (req, res) {
 });
 
 router.post("/posts/:id/delete", async function (req, res) {
-  if (!res.locals.isAuth) {
+  if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
   }
 

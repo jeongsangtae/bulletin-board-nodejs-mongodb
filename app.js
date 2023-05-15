@@ -6,7 +6,6 @@ const expressSession = require("express-session");
 const createSessionConfig = require("./config/session");
 const db = require("./data/database");
 const userAuthMiddleware = require("./middlewares/user");
-const postMiddleware = require("./middlewares/board");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 
@@ -17,6 +16,13 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  next();
+});
 
 const sessionConfig = createSessionConfig();
 

@@ -39,7 +39,7 @@
               <span class="prev btn-prev disabled">이전</span>
             <% } %>
             
-            <% for (let i=1; i <= totalPages; i++) { %>
+            <% for (let i=firstPageGroup; i <= lastPageGroup; i++) { %>
               <% if (page === i) { %>
                 <a href="/profile?page=<%= i %>" class="btn btn-num on"><%= i %></a>
               <% } else { %>

@@ -177,7 +177,7 @@ router.get("/profile", async function (req, res) {
 
   const page = parseInt(req.query.page) || 1;
   const pageSize = 5;
-  // const pageButton = 5;
+  const pageButtonSize = 5;
   const posts = await db
     .getDb()
     .collection("posts")
@@ -193,11 +193,20 @@ router.get("/profile", async function (req, res) {
     .countDocuments({ email: userEmail });
   const totalPages = Math.ceil(countPosts / pageSize);
 
+  const firstPageGroup =
+    Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
+  const lastPageGroup = Math.min(
+    firstPageGroup + pageButtonSize - 1,
+    totalPages
+  );
+
   res.render("profile", {
     posts: posts,
     user: user,
     page: page,
     totalPages: totalPages,
+    firstPageGroup: firstPageGroup,
+    lastPageGroup: lastPageGroup,
   });
 });
 

@@ -15,7 +15,7 @@ router.get("/", function (req, res) {
 router.get("/posts", async function (req, res) {
   const page = parseInt(req.query.page) || 1;
   const pageSize = 5;
-  // const pageButton = 5;
+  const pageButtonSize = 5;
   const posts = await db
     .getDb()
     .collection("posts")
@@ -27,12 +27,19 @@ router.get("/posts", async function (req, res) {
     .toArray();
   const countPosts = await db.getDb().collection("posts").countDocuments({});
   const totalPages = Math.ceil(countPosts / pageSize);
-  // const totalPageButton = Math.ceil(totalPages / pageButton);
+
+  const firstPageGroup =
+    Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
+  const lastPageGroup = Math.min(
+    firstPageGroup + pageButtonSize - 1,
+    totalPages
+  );
   res.render("board-list", {
     posts: posts,
     page: page,
     totalPages: totalPages,
-    // totalPageButton: totalPageButton,
+    firstPageGroup: firstPageGroup,
+    lastPageGroup: lastPageGroup,
   });
 });
 

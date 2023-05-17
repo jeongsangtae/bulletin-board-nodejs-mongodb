@@ -17,7 +17,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
@@ -32,6 +32,10 @@ app.use(userAuthMiddleware);
 
 app.use(boardRoutes);
 app.use(userRoutes);
+
+app.use(function (req, res, next) {
+  res.status(404).render("404");
+});
 
 app.use(function (error, req, res, next) {
   console.log(error);

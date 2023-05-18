@@ -129,10 +129,22 @@ router.get("/posts/:id", async function (req, res) {
     return res.status(404).render("404");
   }
 
-  await db
-    .getDb()
-    .collection("posts")
-    .updateOne({ _id: postId }, { $inc: { count: 1 } });
+  const sessionKey = `count:${postId}`;
+
+  const lastCountTime = req.session[sessionKey];
+  const currentCountTime = new Date().getTime();
+  const elapsedCountTime = currentCountTime - lastCountTime;
+
+  const countInterval = 10000;
+
+  if (!lastCountTime || elapsedCountTime >= countInterval) {
+    await db
+      .getDb()
+      .collection("posts")
+      .updateOne({ _id: postId }, { $inc: { count: 1 } });
+
+    req.session[sessionKey] = currentCountTime;
+  }
 
   let user = null;
   if (req.session.user && req.session.user.email) {

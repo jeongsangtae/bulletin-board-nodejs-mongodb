@@ -12,6 +12,8 @@ function createSessionStore() {
     uri: "mongodb://127.0.0.1:27017",
     databaseName: "bulletin-board",
     collection: "sessions",
+    clearExpired: true,
+    checkExpirationInterval: 60 * 60 * 1000,
   });
 
   return sessionStore;

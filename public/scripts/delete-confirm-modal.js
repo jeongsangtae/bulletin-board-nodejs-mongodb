@@ -11,7 +11,9 @@ function deleteConfirmModal(event) {
   confirmModal.style.display = "block";
 }
 
-deleteButton.addEventListener("click", deleteConfirmModal);
+if (deleteButton) {
+  deleteButton.addEventListener("click", deleteConfirmModal);
+}
 
 function deleteConfirmModalClose() {
   confirmModal.style.display = "none";

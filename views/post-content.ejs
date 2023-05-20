@@ -3,7 +3,7 @@
   <head>
     <%- include('includes/head', { title: "게시글 내용" }) %>
     <link rel="stylesheet" href="/styles/write-content.css" />
-    <link rel="stylesheet" href="/styles/modal.css" />
+    <link rel="stylesheet" href="/styles/modal-confirm.css" />
   </head>
   <body>
     <%- include('includes/header') %>
@@ -49,11 +49,12 @@
 
     <div id="delete-confirm-modal" class="modal">
       <div class="modal-content">
-        <span id="delete-confirm-close" class="close">&times;</span>
-        <p class="error-message">정말로 삭제하시겠습니까?</p>
+        <p class="confirm-message">정말로 삭제하시겠습니까?</p>
+        <div class="btn-group">
+          <button id="btn-confirm-delete" class="delete-btn">삭제</button>
+          <button id="btn-cancel-delete" class="cancel-btn">취소</button>
+        </div>
       </div>
-      <button id="btn-confirm-delete">삭제</button>
-      <button id="btn-cancel-delete">취소</button>
     </div>
     <script defer src="/scripts/delete-confirm-modal.js"></script>
   </body>

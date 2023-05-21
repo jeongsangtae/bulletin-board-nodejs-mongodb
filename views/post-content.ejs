@@ -39,8 +39,13 @@
           <a href="/posts" class="btn-list">목록</a>
           <% if (user && user.email === post.email) { %>
           <a href="/posts/<%= post._id %>/edit" id="btn-editpage">수정</a>
-          <form action="/posts/<%= post._id %>/delete" method="POST">
-            <button id="btn-delete">삭제</button>
+          <form
+            id="delete-form"
+            action="/posts/<%= post._id %>/delete"
+            method="POST"
+          >
+            <button type="button" id="btn-delete">삭제</button>
+            <!-- <button id="btn-delete">삭제</button> -->
           </form>
           <% } %>
         </div>

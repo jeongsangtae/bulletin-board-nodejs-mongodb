@@ -1,4 +1,5 @@
-const deleteForm = document.querySelector("form");
+const deleteForm = document.getElementById("delete-form");
+// const deleteForm = document.querySelector("form");
 const confirmModal = document.getElementById("delete-confirm-modal");
 
 const confirmButton = document.getElementById("btn-confirm-delete");
@@ -13,6 +14,9 @@ function deleteConfirmModal(event) {
 
 if (deleteButton) {
   deleteButton.addEventListener("click", deleteConfirmModal);
+  console.log("폼을 찾았습니다.");
+} else {
+  console.log("폼을 찾을 수 없습니다.");
 }
 
 function deleteConfirmModalClose() {
@@ -21,8 +25,11 @@ function deleteConfirmModalClose() {
 
 cancelButton.addEventListener("click", deleteConfirmModalClose);
 
-function deletePostSubmit() {
+function deletePostSubmit(event) {
+  // event.preventDefault();
   deleteForm.submit();
 }
 
-confirmButton.addEventListener("click", deletePostSubmit);
+if (confirmButton) {
+  confirmButton.addEventListener("click", deletePostSubmit);
+}

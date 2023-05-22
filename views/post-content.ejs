@@ -35,6 +35,25 @@
           </div>
           <div class="board-content"><%= post.content %></div>
         </div>
+        <!-- <div class="board-comment">
+          <div class="comment-user"><%= user.name %></div>
+          <textarea
+            type="text"
+            id="comment-textarea"
+            rows="1"
+            name="comment"
+            placeholder="댓글을 남겨보세요."
+          ></textarea>
+          <button class="btn-comment">등록</button>
+        </div> -->
+        <div class="comment-container">
+          <textarea
+            id="comment-textarea"
+            rows="1"
+            placeholder="댓글을 입력하세요"
+          ></textarea>
+          <button id="comment-button">등록</button>
+        </div>
         <div class="btn-wrap" id="btn-wrap-edit">
           <a href="/posts" class="btn-list">목록</a>
           <% if (user && user.email === post.email) { %>
@@ -44,8 +63,8 @@
             action="/posts/<%= post._id %>/delete"
             method="POST"
           >
-            <button type="button" id="btn-delete">삭제</button>
-            <!-- <button id="btn-delete">삭제</button> -->
+            <!-- <button type="button" id="btn-delete">삭제</button> -->
+            <button id="btn-delete">삭제</button>
           </form>
           <% } %>
         </div>
@@ -62,6 +81,7 @@
       </div>
     </div>
     <script defer src="/scripts/delete-confirm-modal.js"></script>
+    <script defer src="/scripts/comment.js"></script>
   </body>
 </html>
 

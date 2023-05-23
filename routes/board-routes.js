@@ -267,4 +267,33 @@ router.post("/posts/:id/delete", async function (req, res) {
   res.redirect("/posts");
 });
 
+router.post("/posts/:id/comments", async function (req, res) {
+  let postId = req.params.id;
+  let date = new Date();
+
+  const commentInput = req.body.comment;
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  const newComment = {
+    postId: postId,
+    name: user.name,
+    comment: commentInput,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`,
+  };
+
+  await db.getDb().collection("comments").insertOne(newComment);
+
+  res.redirect("/posts/" + postId);
+});
+
 module.exports = router;

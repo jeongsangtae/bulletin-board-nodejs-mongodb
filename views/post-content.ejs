@@ -35,25 +35,39 @@
           </div>
           <div class="board-content"><%= post.content %></div>
         </div>
-        <!-- <div class="board-comment">
-          <div class="comment-user"><%= user.name %></div>
+        <div class="board-comment">
+          <p class="comment-user">dfd</p>
+          <p class="comment">아아아아아</p>
+          <p class="comment-date"><%= post.date %></p>
+        </div>
+        <% if (locals.isAuth) { %>
+        <form action="/posts/<%= post._id %>/comments" method="POST">
+          <div class="board-comment-write">
+            <p class="comment-user"><%= user.name %></p>
+            <textarea
+              type="text"
+              id="comment-textarea"
+              rows="1"
+              name="comment"
+              placeholder="댓글을 남겨보세요."
+            ></textarea>
+            <button class="btn-comment">등록</button>
+          </div>
+        </form>
+        <% } else { %>
+        <div class="board-comment-write">
+          <div class="comment-user">GUEST</div>
           <textarea
             type="text"
             id="comment-textarea"
             rows="1"
             name="comment"
             placeholder="댓글을 남겨보세요."
+            readonly
           ></textarea>
-          <button class="btn-comment">등록</button>
-        </div> -->
-        <div class="comment-container">
-          <textarea
-            id="comment-textarea"
-            rows="1"
-            placeholder="댓글을 입력하세요"
-          ></textarea>
-          <button id="comment-button">등록</button>
+          <button class="btn-comment opacity">등록</button>
         </div>
+        <% } %>
         <div class="btn-wrap" id="btn-wrap-edit">
           <a href="/posts" class="btn-list">목록</a>
           <% if (user && user.email === post.email) { %>

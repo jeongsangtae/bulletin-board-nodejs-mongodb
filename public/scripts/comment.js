@@ -14,5 +14,13 @@ function textareaHeightRestore() {
   }
 }
 
+function limitTextarea() {
+  const maxLength = 300;
+  if (textarea.value.length > maxLength) {
+    textarea.value = textarea.value.slice(0, maxLength);
+  }
+}
+
 textarea.addEventListener("input", textareaHeight);
 textarea.addEventListener("input", textareaHeightRestore);
+textarea.addEventListener("input", limitTextarea);

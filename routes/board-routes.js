@@ -152,9 +152,16 @@ router.get("/posts/:id", async function (req, res) {
     user = await db.getDb().collection("users").findOne({ email: userEmail });
   }
 
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .find({ post_id: postId })
+    .toArray();
+
   res.render("post-content", {
     user: user,
     post: post,
+    comment: comment,
   });
 });
 
@@ -271,7 +278,15 @@ router.post("/posts/:id/comments", async function (req, res) {
   let postId = req.params.id;
   let date = new Date();
 
-  const commentInput = req.body.comment;
+  try {
+    postId = new ObjectId(postId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  const contentInput = req.body.content;
   const userEmail = req.session.user.email;
   const user = await db
     .getDb()
@@ -279,9 +294,9 @@ router.post("/posts/:id/comments", async function (req, res) {
     .findOne({ email: userEmail });
 
   const newComment = {
-    postId: postId,
+    post_id: post._id,
     name: user.name,
-    comment: commentInput,
+    content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
       .toString()

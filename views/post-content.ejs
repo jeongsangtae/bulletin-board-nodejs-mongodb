@@ -35,20 +35,24 @@
           </div>
           <div class="board-content"><%= post.content %></div>
         </div>
-        <div class="board-comment">
-          <p class="comment-user">dfd</p>
-          <p class="comment">아아아아아</p>
-          <p class="comment-date"><%= post.date %></p>
+        <div>
+          <% comment.forEach(comment => { %>
+          <div class="board-comment">
+            <p class="comment-user"><%= comment.name %></p>
+            <p class="comment"><%= comment.content %></p>
+            <p class="comment-date"><%= comment.date %></p>
+          </div>
+          <% }) %>
         </div>
         <% if (locals.isAuth) { %>
         <form action="/posts/<%= post._id %>/comments" method="POST">
           <div class="board-comment-write">
-            <p class="comment-user"><%= user.name %></p>
+            <p class="comment-write-user"><%= user.name %></p>
             <textarea
               type="text"
               id="comment-textarea"
               rows="1"
-              name="comment"
+              name="content"
               placeholder="댓글을 남겨보세요."
             ></textarea>
             <button class="btn-comment">등록</button>
@@ -56,12 +60,12 @@
         </form>
         <% } else { %>
         <div class="board-comment-write">
-          <div class="comment-user">GUEST</div>
+          <div class="comment-write-user">GUEST</div>
           <textarea
             type="text"
             id="comment-textarea"
             rows="1"
-            name="comment"
+            name="content"
             placeholder="댓글을 남겨보세요."
             readonly
           ></textarea>

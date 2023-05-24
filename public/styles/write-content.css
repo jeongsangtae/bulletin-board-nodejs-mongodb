@@ -39,6 +39,19 @@
 }
 
 .board-comment {
+  border-bottom: 1px solid rgb(236, 234, 234);
+}
+
+.board-comment:last-child {
+  border-bottom: none;
+}
+
+.board-comment .comment-user {
+  margin-top: 1rem;
+}
+.board-comment .comment-date {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .board-comment .comment-info {
@@ -58,7 +71,7 @@
   padding: 1rem;
 }
 
-.board-comment-write .comment-user {
+.board-comment-write .comment-write-user {
   display: block;
   width: 100%;
   margin-bottom: 0.5rem;

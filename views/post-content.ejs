@@ -37,11 +37,19 @@
         </div>
         <div>
           <% comment.forEach(comment => { %>
-          <div class="board-comment">
-            <p class="comment-user"><%= comment.name %></p>
-            <p class="comment"><%= comment.content %></p>
-            <p class="comment-date"><%= comment.date %></p>
-          </div>
+          <form action="/posts/<%= post._id %>/comments/delete" method="POST">
+            <div class="board-comment">
+              <p class="comment-user">
+                <%= comment.name %> <% if (locals.isAuth) { %>
+                <button class="btn-comment-delete">삭제</button>
+                <% } else { %>
+                <button class="btn-comment-delete opacity">삭제</button>
+                <% } %>
+              </p>
+              <p class="comment"><%= comment.content %></p>
+              <p class="comment-date"><%= comment.date %></p>
+            </div>
+          </form>
           <% }) %>
         </div>
         <% if (locals.isAuth) { %>

@@ -124,7 +124,7 @@ router.get("/posts/:id", async function (req, res) {
   }
 
   const post = await db.getDb().collection("posts").findOne({ _id: postId });
-
+  // console.log(postId);
   if (!post) {
     return res.status(404).render("404");
   }
@@ -255,11 +255,21 @@ router.post("/posts/:id/delete", async function (req, res) {
     return res.status(401).render("401");
   }
 
-  const postId = req.params.id;
-  const post = await db
-    .getDb()
-    .collection("posts")
-    .findOne({ _id: new ObjectId(postId) });
+  let postId = req.params.id;
+
+  try {
+    postId = new ObjectId(postId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  // console.log(postId);
+
+  // console.log(post._id);
+
+  await db.getDb().collection("comments").deleteMany({ post_id: postId });
 
   await db
     .getDb()
@@ -296,6 +306,7 @@ router.post("/posts/:id/comments", async function (req, res) {
   const newComment = {
     post_id: post._id,
     name: user.name,
+    email: user.email,
     content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
@@ -307,6 +318,27 @@ router.post("/posts/:id/comments", async function (req, res) {
   };
 
   await db.getDb().collection("comments").insertOne(newComment);
+
+  res.redirect("/posts/" + postId);
+});
+
+router.post("/posts/:id/comments/delete", async function (req, res) {
+  let postId = req.params.id;
+
+  try {
+    postId = new ObjectId(postId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  // const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ post_id: postId });
+
+  await db.getDb().collection("comments").deleteOne({ _id: comment._id });
 
   res.redirect("/posts/" + postId);
 });

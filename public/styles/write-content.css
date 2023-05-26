@@ -38,11 +38,11 @@
   max-height: 500px;
 }
 
-.board-comment {
+.board-comment-container .board-comment-form {
   border-bottom: 1px solid rgb(236, 234, 234);
 }
 
-.board-comment:last-child {
+.board-comment-container .board-comment-form:last-child {
   border-bottom: none;
 }
 

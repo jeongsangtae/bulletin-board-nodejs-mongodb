@@ -35,19 +35,27 @@
           </div>
           <div class="board-content"><%= post.content %></div>
         </div>
-        <div>
+        <div class="board-comment-container">
           <% comment.forEach(comment => { %>
-          <form action="/posts/<%= post._id %>/comments/delete" method="POST">
+          <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form">
             <div class="board-comment">
               <p class="comment-user">
-                <%= comment.name %> <% if (locals.isAuth) { %>
-                <button class="btn-comment-delete">삭제</button>
-                <% } else { %>
-                <button class="btn-comment-delete opacity">삭제</button>
+                <%= comment.name %> 
+                <% if (locals.isAuth) { %>
+                  <% if (user && user.email === comment.email) { %>
+                  <button class="btn-comment-delete">삭제</button>
+                  <% } else { %>
+                  <button class="btn-comment-delete opacity">삭제</button>
+                  <% } %>
                 <% } %>
               </p>
               <p class="comment"><%= comment.content %></p>
               <p class="comment-date"><%= comment.date %></p>
+              <input
+                type="hidden"
+                name="commentId"
+                value="<%= comment._id %>"
+              />
             </div>
           </form>
           <% }) %>
@@ -74,7 +82,7 @@
             id="comment-textarea"
             rows="1"
             name="content"
-            placeholder="댓글을 남겨보세요."
+            placeholder="로그인이 필요합니다."
             readonly
           ></textarea>
           <button class="btn-comment opacity">등록</button>

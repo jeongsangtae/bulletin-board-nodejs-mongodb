@@ -323,22 +323,25 @@ router.post("/posts/:id/comments", async function (req, res) {
 });
 
 router.post("/posts/:id/comments/delete", async function (req, res) {
+  let commentId = req.body.commentId;
   let postId = req.params.id;
 
   try {
-    postId = new ObjectId(postId);
+    commentId = new ObjectId(commentId);
   } catch (error) {
     return res.status(404).render("404");
   }
 
-  // const post = await db.getDb().collection("posts").findOne({ _id: postId });
-
   const comment = await db
     .getDb()
     .collection("comments")
-    .findOne({ post_id: postId });
+    .findOne({ _id: commentId });
 
-  await db.getDb().collection("comments").deleteOne({ _id: comment._id });
+  if (!comment) {
+    return res.status(404).render("404");
+  }
+
+  await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
   res.redirect("/posts/" + postId);
 });

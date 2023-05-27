@@ -38,6 +38,13 @@
   max-height: 500px;
 }
 
+.board-comment-container {
+  display: flex;
+  flex-direction: column;
+  width: 98%;
+  margin: 0 auto;
+}
+
 .board-comment-container .board-comment-form {
   border-bottom: 1px solid rgb(236, 234, 234);
 }
@@ -48,22 +55,56 @@
 
 .board-comment .comment-user {
   margin-top: 1rem;
-}
-.board-comment .comment-date {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  /* margin-left: 0.1rem; */
+  font-weight: bold;
 }
 
-.board-comment .comment-info {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.board-comment .btn-comment-delete {
+  /* margin-top: 0.17rem; */
+  font-size: 1rem;
+  float: right;
+  background-color: white;
+  color: rgb(255, 144, 144);
+  border: none;
+  /* border: 1px solid red; */
+  /* border-radius: 2px; */
+  padding: 0.2rem 0.5rem;
+}
+
+.board-comment .btn-comment-delete:hover {
+  color: rgb(255, 18, 18);
+  /* background-color: rgb(219, 0, 0); */
+}
+
+.board-comment .comment-content {
+  margin-top: 0.5rem;
+}
+
+.board-comment .comment-date {
+  margin-top: 0.5rem;
+  color: rgb(196, 181, 181);
+  font-size: 0.8rem;
+  display: inline;
+}
+
+.board-comment .comment-reply {
+  display: inline;
+  margin-bottom: 1rem;
+  border: none;
+  background-color: white;
+  font-size: 0.8rem;
+  color: rgb(196, 181, 181);
+  cursor: pointer;
+}
+
+.board-comment .comment-reply:hover {
+  text-decoration: underline;
 }
 
 .board-comment-write {
   display: flex;
   width: 95%;
-  margin: 1rem auto 0 auto;
+  margin: 0.5rem auto 0 auto;
   flex-direction: column;
   align-items: stretch;
   border: 1px solid rgb(180, 173, 173);
@@ -106,9 +147,9 @@
 
 .board-comment-write .btn-comment:hover {
   cursor: pointer;
+  /* color: rgb(54, 46, 46); */
   color: white;
-  /* background-color: rgb(40, 40, 40); */
-  background-color: rgb(152, 211, 16);
+  background-color: rgb(200, 200, 200);
   border-radius: 2px;
 }
 
@@ -133,7 +174,8 @@
 }
 
 #btn-editpage:hover {
-  color: rgb(54, 46, 46);
+  /* color: rgb(54, 46, 46); */
+  color: white;
   background-color: rgb(200, 200, 200);
   border: 1px solid rgb(217, 205, 205);
 }

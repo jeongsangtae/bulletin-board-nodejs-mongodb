@@ -43,14 +43,14 @@
                 <%= comment.name %> 
                 <% if (locals.isAuth) { %>
                   <% if (user && user.email === comment.email) { %>
-                  <button class="btn-comment-delete">삭제</button>
-                  <% } else { %>
-                  <button class="btn-comment-delete opacity">삭제</button>
+                  <button class="btn-comment-delete">&times;</button>
+                  <!-- <button class="btn-comment-delete opacity">삭제</button> -->
                   <% } %>
                 <% } %>
               </p>
-              <p class="comment"><%= comment.content %></p>
+              <p class="comment-content"><%= comment.content %></p>
               <p class="comment-date"><%= comment.date %></p>
+              <button class="comment-reply">답글쓰기</button>
               <input
                 type="hidden"
                 name="commentId"

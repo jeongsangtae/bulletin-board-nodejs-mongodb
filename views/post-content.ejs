@@ -37,27 +37,36 @@
         </div>
         <div class="board-comment-container">
           <% comment.forEach(comment => { %>
-          <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form">
             <div class="board-comment">
-              <p class="comment-user">
-                <%= comment.name %> 
+              <div class="comment-user-edit">
+                <p class="comment-user"><%= comment.name %></p>
                 <% if (locals.isAuth) { %>
-                  <% if (user && user.email === comment.email) { %>
-                  <button class="btn-comment-delete">&times;</button>
-                  <!-- <button class="btn-comment-delete opacity">삭제</button> -->
-                  <% } %>
+                <% if (user && user.email === comment.email) { %>
+                <div class="btn-form">
+                  <form action="/posts/<%= post._id %>/comments/edit" method="POST" class="board-comment-form">
+                    <button class="btn-comment-edit">&#9998;</button>
+                    <input 
+                    type="hidden" 
+                    name="commentId" 
+                    value="<%= comment._id %>"
+                    />
+                  </form>
+                  <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form">
+                    <button class="btn-comment-delete">&times;</button>
+                    <input 
+                    type="hidden" 
+                    name="commentId" 
+                    value="<%= comment._id %>"
+                    />
+                  </form>
+                </div>           
                 <% } %>
-              </p>
+                <% } %>              
+              </div>
               <p class="comment-content"><%= comment.content %></p>
               <p class="comment-date"><%= comment.date %></p>
               <button class="comment-reply">답글쓰기</button>
-              <input
-                type="hidden"
-                name="commentId"
-                value="<%= comment._id %>"
-              />
             </div>
-          </form>
           <% }) %>
         </div>
         <% if (locals.isAuth) { %>

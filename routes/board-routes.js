@@ -322,6 +322,8 @@ router.post("/posts/:id/comments", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+router.post("/posts/:id/comments/edit", async function (req, res) {});
+
 router.post("/posts/:id/comments/delete", async function (req, res) {
   let commentId = req.body.commentId;
   let postId = req.params.id;

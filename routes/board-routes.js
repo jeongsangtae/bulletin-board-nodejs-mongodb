@@ -322,7 +322,38 @@ router.post("/posts/:id/comments", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
-router.post("/posts/:id/comments/edit", async function (req, res) {});
+router.post("/posts/:id/comments/edit", async function (req, res) {
+  let commentId = req.body.commentId;
+  let postId = req.params.id;
+
+  try {
+    commentId = new ObjectId(commentId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ _id: commentId });
+
+  const commentContent = req.body.content;
+
+  const updateCommentData = {
+    content: commentContent,
+  };
+
+  if (!comment) {
+    return res.status(404).render("404");
+  }
+
+  await db
+    .getDb()
+    .collection("comments")
+    .updateOne({ _id: commentId }, { $set: updateCommentData });
+
+  res.redirect("/posts/" + postId);
+});
 
 router.post("/posts/:id/comments/delete", async function (req, res) {
   let commentId = req.body.commentId;

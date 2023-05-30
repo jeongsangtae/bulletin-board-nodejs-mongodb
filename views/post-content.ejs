@@ -42,16 +42,9 @@
                 <p class="comment-user"><%= comment.name %></p>
                 <% if (locals.isAuth) { %>
                 <% if (user && user.email === comment.email) { %>
-                <div class="btn-form">
-                  <form action="/posts/<%= post._id %>/comments/edit" method="POST" class="board-comment-form">
-                    <button class="btn-comment-edit">&#9998;</button>
-                    <input 
-                    type="hidden" 
-                    name="commentId" 
-                    value="<%= comment._id %>"
-                    />
-                  </form>
-                  <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form">
+                <div class="btn-form">                  
+                  <button class="btn-comment-edit">&#9998;</button>
+                  <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form-delete">
                     <button class="btn-comment-delete">&times;</button>
                     <input 
                     type="hidden" 
@@ -66,6 +59,31 @@
               <p class="comment-content"><%= comment.content %></p>
               <p class="comment-date"><%= comment.date %></p>
               <button class="comment-reply">답글쓰기</button>
+              <% if (locals.isAuth) { %>
+              <% if (user && user.email === comment.email) { %>
+              <form action="/posts/<%= post._id %>/comments/edit" method="POST" class="board-comment-form-edit">
+                <div class="board-comment-write">
+                  <p class="comment-write-user"><%= user.name %></p>
+                  <textarea
+                    type="text"
+                    class="comment-textarea"
+                    rows="1"
+                    name="content"
+                    data-comment-content="<%= comment.content %>"
+                  ><%= comment.content %></textarea>
+                  <input 
+                    type="hidden" 
+                    name="commentId" 
+                    value="<%= comment._id %>"
+                    />
+                  <div class="comment-buttons">
+                    <button type="submit" class="btn-comment comment-edit">수정</button>
+                    <button type="button" class="btn-comment btn-comment-cancel">취소</button>
+                  </div>
+                </div>
+              </form>
+              <% } %>
+              <% } %>
             </div>
           <% }) %>
         </div>
@@ -75,12 +93,12 @@
             <p class="comment-write-user"><%= user.name %></p>
             <textarea
               type="text"
-              id="comment-textarea"
+              class="comment-textarea"
               rows="1"
               name="content"
               placeholder="댓글을 남겨보세요."
             ></textarea>
-            <button class="btn-comment">등록</button>
+            <button class="btn-comment comment-add">등록</button>
           </div>
         </form>
         <% } else { %>
@@ -88,13 +106,13 @@
           <div class="comment-write-user">GUEST</div>
           <textarea
             type="text"
-            id="comment-textarea"
+            class="comment-textarea"
             rows="1"
             name="content"
             placeholder="로그인이 필요합니다."
             readonly
           ></textarea>
-          <button class="btn-comment opacity">등록</button>
+          <button class="btn-comment comment-add opacity">등록</button>
         </div>
         <% } %>
         <div class="btn-wrap" id="btn-wrap-edit">
@@ -123,6 +141,7 @@
         </div>
       </div>
     </div>
+    
     <script defer src="/scripts/delete-confirm-modal.js"></script>
     <script defer src="/scripts/comment.js"></script>
   </body>

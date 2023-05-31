@@ -116,12 +116,21 @@ router.get("/create-post", async function (req, res) {
 
 router.get("/posts/:id", async function (req, res) {
   let postId = req.params.id;
+  let commentId = req.query.commentId;
 
   try {
     postId = new ObjectId(postId);
   } catch (error) {
     return res.status(404).render("404");
   }
+
+  try {
+    commentId = new ObjectId(commentId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  console.log(commentId)
 
   const post = await db.getDb().collection("posts").findOne({ _id: postId });
   // console.log(postId);
@@ -158,10 +167,16 @@ router.get("/posts/:id", async function (req, res) {
     .find({ post_id: postId })
     .toArray();
 
+  const reply = await db
+    .getDb()
+    .collection("replies")
+    .find({ comment_id: commentId });
+
   res.render("post-content", {
     user: user,
     post: post,
     comment: comment,
+    reply: reply,
   });
 });
 
@@ -375,6 +390,56 @@ router.post("/posts/:id/comments/delete", async function (req, res) {
   }
 
   await db.getDb().collection("comments").deleteOne({ _id: commentId });
+
+  res.redirect("/posts/" + postId);
+});
+
+router.post("/posts/:id/comments/replies", async function (req, res) {
+  let postId = req.params.id;
+  let commentId = req.body.commentId;
+  let date = new Date();
+
+  try {
+    postId = new ObjectId(postId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  try {
+    commentId = new ObjectId(commentId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  const contentInput = req.body.content;
+  const userEmail = req.session.user.email;
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ _id: commentId });
+
+  const newReply = {
+    comment_id: comment._id,
+    name: user.name,
+    email: user.email,
+    content: contentInput,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`,
+  };
+
+  await db.getDb().collection("replies").insertOne(newReply);
 
   res.redirect("/posts/" + postId);
 });

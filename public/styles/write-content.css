@@ -134,6 +134,10 @@
   text-decoration: underline;
 }
 
+.board-comment .board-comment-form-reply {
+  display: none;
+}
+
 .board-comment .board-comment-form-edit {
   display: none;
 }
@@ -194,7 +198,7 @@
   border-radius: 2px;
 }
 
-/* .board-comment-write .comment-cancel {
+.board-comment-write .comment-cancel {
   border: none;
   padding: 0.25rem 0.5rem;
   margin-right: 0.25rem;
@@ -206,7 +210,7 @@
   color: white;
   background-color: rgb(200, 200, 200);
   border-radius: 2px;
-} */
+}
 
 .board-comment-write .comment-add {
   margin-top: 0.5rem;

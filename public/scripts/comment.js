@@ -6,9 +6,13 @@ const btnCommentCancels = document.querySelectorAll(".btn-comment-cancel");
 const boardCommentFormEdits = document.querySelectorAll(
   ".board-comment-form-edit"
 );
-const btnCommentReplys = document.querySelectorAll(".btn-comment-reply")
-const btnCommentFormReplys = document.querySelectorAll(".board-comment-form-reply")
-const btnCommentReplyCancels = document.querySelectorAll(".btn-comment-reply-cancel")
+const btnCommentReplys = document.querySelectorAll(".btn-comment-reply");
+const btnCommentFormReplys = document.querySelectorAll(
+  ".board-comment-form-reply"
+);
+const btnCommentReplyCancels = document.querySelectorAll(
+  ".btn-comment-reply-cancel"
+);
 
 function textareaHeight() {
   const textarea = this;
@@ -47,7 +51,8 @@ btnCommentEdits.forEach((btnCommentEdit, index) => {
 
 btnCommentCancels.forEach((btnCommentCancel, index) => {
   btnCommentCancel.addEventListener("click", () => {
-    const textarea = boardCommentFormEdits[index].querySelector(".comment-textarea");
+    const textarea =
+      boardCommentFormEdits[index].querySelector(".comment-textarea");
     textarea.value = textarea.dataset.commentContent;
     boardCommentFormEdits[index].style.display = "none";
   });
@@ -55,9 +60,33 @@ btnCommentCancels.forEach((btnCommentCancel, index) => {
 
 btnCommentReplys.forEach((btnCommentReply, index) => {
   btnCommentReply.addEventListener("click", () => {
-    btnCommentFormReplys[index].style.display = "block"
-  })
-})
+    btnCommentFormReplys[index].style.display = "block";
+
+    console.log("전송됨")
+
+    const postId = btnCommentReply.dataset.postId;
+    const commentId = btnCommentReply.dataset.commentId;
+    const data = {
+      commentId: commentId,
+    };
+
+    fetch(`/posts/${postId}/comments/replies`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert("무엇인가 잘못된 거 같습니다. data");
+      })
+      .catch((error) => {
+        console.error(error)
+        alert("무엇인가 잘못된 거 같습니다. error");
+      });
+  });
+});
 
 btnCommentReplyCancels.forEach((btnCommentReplyCancel, index) => {
   btnCommentReplyCancel.addEventListener("click", () => {

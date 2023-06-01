@@ -130,8 +130,6 @@ router.get("/posts/:id", async function (req, res) {
     return res.status(404).render("404");
   }
 
-  console.log(commentId)
-
   const post = await db.getDb().collection("posts").findOne({ _id: postId });
   // console.log(postId);
   if (!post) {
@@ -170,7 +168,8 @@ router.get("/posts/:id", async function (req, res) {
   const reply = await db
     .getDb()
     .collection("replies")
-    .find({ comment_id: commentId });
+    .find({ comment_id: commentId })
+    .toArray();
 
   res.render("post-content", {
     user: user,

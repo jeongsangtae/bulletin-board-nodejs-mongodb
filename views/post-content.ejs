@@ -59,8 +59,15 @@
               <p class="comment-content"><%= comment.content %></p>
               <p class="comment-date"><%= comment.date %></p>
               <% if (locals.isAuth) { %>
-              <button class="comment-reply btn-comment-reply">답글쓰기</button>
-                <form action="/posts/<%= post._id %>/comments/replies" method="POST" class="board-comment-form-reply">
+              <button 
+              class="comment-reply btn-comment-reply"
+              data-comment-id="<%= comment._id %>"
+              data-post-id="<%= post._id %>">답글쓰기</button>
+                <form 
+                action="/posts/<%= post._id %>/comments/replies" 
+                method="POST" 
+                class="board-comment-form-reply"              
+                >
                   <div class="board-comment-write">
                     <p class="comment-write-user"><%= user.name %></p>
                     <textarea
@@ -75,8 +82,15 @@
                     name="commentId" 
                     value="<%= comment._id %>"
                     />
-                    <button type="submit" class="btn-comment comment-add">등록</button>
-                    <button type="button" class="btn-comment btn-comment-reply-cancel comment-cancel">취소</button>
+                    <input 
+                    type="hidden" 
+                    name="postId" 
+                    value="<%= post._id %>"
+                    />
+                    <div class="comment-buttons">
+                      <button type="submit" class="btn-comment">등록</button>
+                      <button type="button" class="btn-comment btn-comment-reply-cancel comment-cancel">취소</button>
+                    </div>
                   </div>
                 </form>
               <% } else { %>

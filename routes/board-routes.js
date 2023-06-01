@@ -116,16 +116,9 @@ router.get("/create-post", async function (req, res) {
 
 router.get("/posts/:id", async function (req, res) {
   let postId = req.params.id;
-  let commentId = req.query.commentId;
 
   try {
     postId = new ObjectId(postId);
-  } catch (error) {
-    return res.status(404).render("404");
-  }
-
-  try {
-    commentId = new ObjectId(commentId);
   } catch (error) {
     return res.status(404).render("404");
   }
@@ -165,11 +158,18 @@ router.get("/posts/:id", async function (req, res) {
     .find({ post_id: postId })
     .toArray();
 
-  const reply = await db
-    .getDb()
-    .collection("replies")
-    .find({ comment_id: commentId })
-    .toArray();
+  const replyPromises = comment.map(async (c) => {
+    const reply = await db
+      .getDb()
+      .collection("replies")
+      .find({ comment_id: new ObjectId(c._id) })
+      .toArray();
+    return reply;
+  });
+
+  const reply = await Promise.all(replyPromises);
+
+  console.log(reply);
 
   res.render("post-content", {
     user: user,

@@ -120,26 +120,32 @@
               </form>
               <% } %>
             </div>
-            <div class="comment-user-edit">
-              <p class="comment-user"><%= reply.name %></p>
-              <% if (locals.isAuth) { %>
-              <% if (user && user.email === reply.email) { %>
-              <div class="btn-form">                  
-                <button class="btn-comment-edit">&#9998;</button>
-                <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form-delete">
-                  <button class="btn-comment-delete">&times;</button>
-                  <input 
-                  type="hidden" 
-                  name="commentId" 
-                  value="<%= reply._id %>"
-                  />
-                </form>
-              </div>           
-              <% } %>
-              <% } %>              
-            </div>
-            <p class="comment-content"><%= reply.content %></p>
-            <p class="comment-date"><%= reply.date %></p>
+            <% reply.forEach((replyArr) => { %>
+              <% replyArr.forEach((reply) => { %>
+                <% if (reply.comment_id.toString() === comment._id.toString()) { %>
+                <div class="board-comment comment-reply">
+                  <div class="comment-user-edit">
+                    <p class="comment-user"><%= reply.name %></p>              
+                    <div class="btn-form">                  
+                      <!-- <button class="btn-comment-edit">&#9998;</button> -->
+                      <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form-delete">
+                        <!-- <button class="btn-comment-delete">&times;</button> -->
+                        <input 
+                        type="hidden" 
+                        name="commentId" 
+                        value="<%= reply._id %>"
+                        />
+                      </form>
+                    </div>                        
+                  </div>
+                  <p class="comment-content"><%= reply.content %></p>
+                  <div class="date-margin">
+                    <p class="comment-date"><%= reply.date %></p>
+                  </div>
+                </div>
+                <% } %>
+              <% }) %>
+            <% }) %>
           <% }) %>
         </div>
         <% if (locals.isAuth) { %>

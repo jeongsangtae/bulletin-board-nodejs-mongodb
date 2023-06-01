@@ -142,6 +142,15 @@
   display: none;
 }
 
+.comment-reply {
+  margin-left: 1rem;
+}
+
+.date-margin {
+  margin-bottom: 1rem;
+}
+
+
 .board-comment-write {
   display: flex;
   width: 95%;

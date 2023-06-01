@@ -61,30 +61,8 @@ btnCommentCancels.forEach((btnCommentCancel, index) => {
 btnCommentReplys.forEach((btnCommentReply, index) => {
   btnCommentReply.addEventListener("click", () => {
     btnCommentFormReplys[index].style.display = "block";
-
-    console.log("전송됨")
-
-    const postId = btnCommentReply.dataset.postId;
-    const commentId = btnCommentReply.dataset.commentId;
-    const data = {
-      commentId: commentId,
-    };
-
-    fetch(`/posts/${postId}/comments/replies`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        alert("무엇인가 잘못된 거 같습니다. data");
-      })
-      .catch((error) => {
-        console.error(error)
-        alert("무엇인가 잘못된 거 같습니다. error");
-      });
+    const input = btnCommentFormReplys[index].querySelector("input");
+    console.log(input.value);
   });
 });
 

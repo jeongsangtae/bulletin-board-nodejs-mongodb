@@ -169,7 +169,7 @@ router.get("/posts/:id", async function (req, res) {
 
   const reply = await Promise.all(replyPromises);
 
-  console.log(reply);
+  // console.log(reply);
 
   res.render("post-content", {
     user: user,
@@ -337,8 +337,8 @@ router.post("/posts/:id/comments", async function (req, res) {
 });
 
 router.post("/posts/:id/comments/edit", async function (req, res) {
-  let commentId = req.body.commentId;
   let postId = req.params.id;
+  let commentId = req.body.commentId;
 
   try {
     commentId = new ObjectId(commentId);
@@ -370,8 +370,8 @@ router.post("/posts/:id/comments/edit", async function (req, res) {
 });
 
 router.post("/posts/:id/comments/delete", async function (req, res) {
-  let commentId = req.body.commentId;
   let postId = req.params.id;
+  let commentId = req.body.commentId;
 
   try {
     commentId = new ObjectId(commentId);
@@ -410,8 +410,6 @@ router.post("/posts/:id/comments/replies", async function (req, res) {
     return res.status(404).render("404");
   }
 
-  const post = await db.getDb().collection("posts").findOne({ _id: postId });
-
   const contentInput = req.body.content;
   const userEmail = req.session.user.email;
   const user = await db
@@ -439,6 +437,63 @@ router.post("/posts/:id/comments/replies", async function (req, res) {
   };
 
   await db.getDb().collection("replies").insertOne(newReply);
+
+  res.redirect("/posts/" + postId);
+});
+
+router.post("/posts/:id/comments/replies/edit", async function (req, res) {
+  let postId = req.params.id;
+  let replyId = req.body.replyId;
+
+  try {
+    replyId = new ObjectId(replyId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const reply = await db
+    .getDb()
+    .collection("replies")
+    .findOne({ _id: replyId });
+
+  const replyContent = req.body.content;
+
+  const updataReplyData = {
+    content: replyContent,
+  };
+
+  if (!reply) {
+    return res.status(404).render("404");
+  }
+
+  await db
+    .getDb()
+    .collection("replies")
+    .updateOne({ _id: replyId }, { $set: updataReplyData });
+
+  res.redirect("/posts/" + postId);
+});
+
+router.post("/posts/:id/comments/replies/delete", async function (req, res) {
+  let postId = req.params.id;
+  let replyId = req.body.replyId;
+
+  try {
+    replyId = new ObjectId(replyId);
+  } catch (error) {
+    return res.status(404).render("404");
+  }
+
+  const reply = await db
+    .getDb()
+    .collection("replies")
+    .findOne({ _id: replyId });
+
+  if (!reply) {
+    return res.status(404).render("404");
+  }
+
+  await db.getDb().collection("replies").deleteOne({ _id: replyId });
 
   res.redirect("/posts/" + postId);
 });

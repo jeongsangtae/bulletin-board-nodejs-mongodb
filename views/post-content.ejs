@@ -58,6 +58,7 @@
               </div>
               <p class="comment-content"><%= comment.content %></p>
               <p class="comment-date"><%= comment.date %></p>
+
               <% if (locals.isAuth) { %>
               <button 
               class="comment-reply btn-comment-reply"
@@ -96,6 +97,7 @@
               <% } else { %>
               <button class="comment-reply btn-comment-reply opacity">답글쓰기</button>
               <% } %>
+
               <% if (user && user.email === comment.email) { %>
               <form action="/posts/<%= post._id %>/comments/edit" method="POST" class="board-comment-form-edit">
                 <div class="board-comment-write">
@@ -119,33 +121,68 @@
                 </div>
               </form>
               <% } %>
+
             </div>
+
             <% reply.forEach((replyArr) => { %>
               <% replyArr.forEach((reply) => { %>
                 <% if (reply.comment_id.toString() === comment._id.toString()) { %>
                 <div class="board-comment comment-reply">
                   <div class="comment-user-edit">
-                    <p class="comment-user"><%= reply.name %></p>              
+                    <p class="comment-user"><%= reply.name %></p>
+                    <% if (locals.isAuth) { %>
+                    <% if (user && user.email === reply.email) { %>              
                     <div class="btn-form">                  
-                      <!-- <button class="btn-comment-edit">&#9998;</button> -->
-                      <form action="/posts/<%= post._id %>/comments/delete" method="POST" class="board-comment-form-delete">
-                        <!-- <button class="btn-comment-delete">&times;</button> -->
+                      <button class="btn-reply-edit">&#9998;</button>
+                      <form action="/posts/<%= post._id %>/comments/replies/delete" method="POST" class="board-comment-form-delete">
+                        <button class="btn-comment-delete">&times;</button>
                         <input 
                         type="hidden" 
-                        name="commentId" 
+                        name="replyId" 
                         value="<%= reply._id %>"
                         />
                       </form>
-                    </div>                        
+                    </div>
+                    <% } %>
+                    <% } %>                        
                   </div>
                   <p class="comment-content"><%= reply.content %></p>
                   <div class="date-margin">
                     <p class="comment-date"><%= reply.date %></p>
                   </div>
+                  
+                  <% if (user && user.email === reply.email) { %>
+                    <form action="/posts/<%= post._id %>/comments/replies/edit" method="POST" class="board-reply-form-edit">
+                      <div class="board-comment-write">
+                        <p class="comment-write-user"><%= reply.name %></p>
+                        <textarea
+                          type="text"
+                          class="comment-textarea"
+                          rows="1"
+                          name="content"
+                          data-reply-content="<%= reply.content %>"
+                        ><%= reply.content %></textarea>
+                        <input 
+                          type="hidden" 
+                          name="replyId" 
+                          value="<%= reply._id %>"
+                          />
+                        <div class="comment-buttons">
+                          <button type="submit" class="btn-comment comment-edit">수정</button>
+                          <button type="button" class="btn-comment btn-reply-cancel comment-cancel">취소</button>
+                        </div>
+                      </div>
+                    </form>
+                    <% } %>
+
                 </div>
+
+                
+
                 <% } %>
               <% }) %>
             <% }) %>
+
           <% }) %>
         </div>
         <% if (locals.isAuth) { %>

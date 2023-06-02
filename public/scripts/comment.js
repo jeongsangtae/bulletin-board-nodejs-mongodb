@@ -6,6 +6,7 @@ const btnCommentCancels = document.querySelectorAll(".btn-comment-cancel");
 const boardCommentFormEdits = document.querySelectorAll(
   ".board-comment-form-edit"
 );
+
 const btnCommentReplys = document.querySelectorAll(".btn-comment-reply");
 const btnCommentFormReplys = document.querySelectorAll(
   ".board-comment-form-reply"
@@ -13,6 +14,10 @@ const btnCommentFormReplys = document.querySelectorAll(
 const btnCommentReplyCancels = document.querySelectorAll(
   ".btn-comment-reply-cancel"
 );
+
+const btnReplyEdits = document.querySelectorAll(".btn-reply-edit");
+const btnReplyCancels = document.querySelectorAll(".btn-reply-cancel");
+const boardReplyFormEdits = document.querySelectorAll(".board-reply-form-edit");
 
 function textareaHeight() {
   const textarea = this;
@@ -71,5 +76,20 @@ btnCommentReplyCancels.forEach((btnCommentReplyCancel, index) => {
     // const textarea = boardCommentFormEdits[index].querySelector(".comment-textarea");
     // textarea.value = textarea.dataset.commentContent;
     btnCommentFormReplys[index].style.display = "none";
+  });
+});
+
+btnReplyEdits.forEach((btnReplyEdit, index) => {
+  btnReplyEdit.addEventListener("click", () => {
+    boardReplyFormEdits[index].style.display = "block";
+  });
+});
+
+btnReplyCancels.forEach((btnReplyCancel, index) => {
+  btnReplyCancel.addEventListener("click", () => {
+    const textarea =
+    boardReplyFormEdits[index].querySelector(".comment-textarea");
+    textarea.value = textarea.dataset.replyContent;
+    boardReplyFormEdits[index].style.display = "none";
   });
 });

@@ -77,6 +77,7 @@
                       rows="1"
                       name="content"
                       placeholder="답글을 남겨보세요."
+                      required
                     ></textarea>
                     <input 
                     type="hidden" 
@@ -107,6 +108,7 @@
                     class="comment-textarea"
                     rows="1"
                     name="content"
+                    required
                     data-comment-content="<%= comment.content %>"
                   ><%= comment.content %></textarea>
                   <input 
@@ -160,6 +162,7 @@
                           class="comment-textarea"
                           rows="1"
                           name="content"
+                          required
                           data-reply-content="<%= reply.content %>"
                         ><%= reply.content %></textarea>
                         <input 
@@ -195,6 +198,7 @@
               rows="1"
               name="content"
               placeholder="댓글을 남겨보세요."
+              required
             ></textarea>
             <button class="btn-comment comment-add">등록</button>
           </div>

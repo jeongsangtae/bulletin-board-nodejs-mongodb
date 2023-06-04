@@ -270,23 +270,9 @@ router.post("/posts/:id/delete", async function (req, res) {
   }
 
   let postId = req.params.id;
-  let commentId = req.body.commentId;
-  let replyId = req.body.replyId;
 
   try {
     postId = new ObjectId(postId);
-  } catch (error) {
-    return res.status(404).render("404");
-  }
-
-  try {
-    commentId = new ObjectId(commentId);
-  } catch (error) {
-    return res.status(404).render("404");
-  }
-
-  try {
-    replyId = new ObjectId(replyId);
   } catch (error) {
     return res.status(404).render("404");
   }
@@ -297,27 +283,20 @@ router.post("/posts/:id/delete", async function (req, res) {
 
   // console.log(post._id);
 
-  const comment = await db
-    .getDb()
-    .collection("commets")
-    .find({ _id: commentId })
-    .toArray();
+  // const comments = await db
+  //   .getDb()
+  //   .collection("comments")
+  //   .find({ post_id: postId })
+  //   .toArray();
 
-  if (!comment) {
-    return res.status(404).render("404");
-  }
+  // for (const comment of comments) {
+  //   await db
+  //     .getDb()
+  //     .collection("replies")
+  //     .deleteMany({ comment_id: comment._id });
+  // }
 
-  const reply = await db
-    .getDb()
-    .collection("replies")
-    .find({ _id: replyId })
-    .toArray();
-
-  if (!reply) {
-    return res.status(404).render("404");
-  }
-
-  await db.getDb().collection("replies").deleteMany({ comment_id: commentId });
+  await db.getDb().collection("replies").deleteMany({ post_id: postId });
 
   await db.getDb().collection("comments").deleteMany({ post_id: postId });
 
@@ -458,6 +437,7 @@ router.post("/posts/:id/comments/replies", async function (req, res) {
     .findOne({ _id: commentId });
 
   const newReply = {
+    post_id: postId,
     comment_id: comment._id,
     name: user.name,
     email: user.email,

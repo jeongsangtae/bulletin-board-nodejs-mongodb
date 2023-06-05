@@ -36,6 +36,7 @@
   font-size: 1rem;
   min-height: 250px;
   max-height: 500px;
+  white-space: pre-line;
 }
 
 .board-comment-container {
@@ -112,6 +113,7 @@
 
 .board-comment .comment-content {
   margin-top: 0.5rem;
+  white-space: pre-line;
 }
 
 .board-comment .comment-date {
@@ -124,6 +126,7 @@
 .board-comment .comment-reply {
   display: inline;
   margin-bottom: 1rem;
+  margin-left: 0.5rem;
   border: none;
   background-color: white;
   font-size: 0.8rem;
@@ -201,7 +204,7 @@
 .board-comment-write .btn-comment:hover {
   cursor: pointer;
   color: white;
-  background-color: rgb(200, 200, 200);
+  background-color: rgb(40, 40, 40);
   border-radius: 2px;
 }
 

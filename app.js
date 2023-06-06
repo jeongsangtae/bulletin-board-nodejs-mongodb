@@ -9,6 +9,12 @@ const userAuthMiddleware = require("./middlewares/user");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 
+let port = 3000;
+
+if (process.env.PORT) {
+  port = process.env.PORT;
+}
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -44,7 +50,7 @@ app.use(function (error, req, res, next) {
 
 db.connectToDatabase()
   .then(function () {
-    app.listen(3000);
+    app.listen(port);
   })
   .catch(function (error) {
     console.log("데이터베이스에 연결하지 못했습니다.");

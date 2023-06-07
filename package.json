@@ -9,6 +9,9 @@
   "keywords": [],
   "author": "Jeong sang tae",
   "license": "ISC",
+  "engines": {
+    "node": "14.20.1"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-mongodb-session": "^3.1.1",

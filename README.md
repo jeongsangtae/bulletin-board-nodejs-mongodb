@@ -44,6 +44,10 @@
 
 ### 추후 추가할 기능들
 
-1. 
+1. 현재 웹에서만 제대로 보이고 모바일은 좀 화면이 불편해서 이 부분을 변경해줘야 함
+
+2. 버튼의 UI 변경
+
+3. 가입하기나 로그인은 모달창 방식으로 띄우기 
 
 [JS, ExpressJS, MongoDB, EJS로 만드는 게시판](https://bulletin-board-v0w0.onrender.com/)

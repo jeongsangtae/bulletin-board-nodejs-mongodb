@@ -7,10 +7,12 @@ const secretKey = process.env.SECRET_KEY;
 
 let mongodbUrl = "mongodb://127.0.0.1:27017";
 
+// 환경 변수 처리 mongo atlas 연결 및 render에 추가
 if (process.env.MONGODB_URL) {
   mongodbUrl = process.env.MONGODB_URL;
 }
 
+// 세션 만료 후 데이터 삭제 추가
 function createSessionStore() {
   const MongoDBStore = mongoDbStore(expressSession);
 
@@ -25,6 +27,7 @@ function createSessionStore() {
   return sessionStore;
 }
 
+// 세션, 세션 만료
 function createSessionConfig() {
   return {
     secret: secretKey,

@@ -5,6 +5,7 @@ const db = require("../data/database");
 
 const router = express.Router();
 
+// 가입 페이지
 router.get("/signup", function (req, res) {
   let sessionSignUpInputData = req.session.inputData;
 
@@ -32,6 +33,7 @@ router.post("/signup", async function (req, res) {
   const signUpName = userData.name;
   const signUpPassword = userData.password;
 
+  // 이메일, 이메일확인, 이름, 패스워드 등 잘못된 입력을 확인하는 코드
   if (
     !signUpEmail ||
     !signUpConfirmEmail ||
@@ -92,6 +94,7 @@ router.post("/signup", async function (req, res) {
   res.redirect("/login");
 });
 
+// 로그인 페이지
 router.get("/login", function (req, res) {
   let sessionLoginInputData = req.session.inputData;
 
@@ -164,6 +167,7 @@ router.post("/login", async function (req, res) {
   });
 });
 
+// 사용자 본인이 쓴 게시글만 따로 모아 볼 수 있는 페이지
 router.get("/profile", async function (req, res) {
   if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
@@ -210,6 +214,7 @@ router.get("/profile", async function (req, res) {
   });
 });
 
+// 로그아웃하는 POST
 router.post("/logout", function (req, res) {
   req.session.user = null;
   req.session.isAuthenticated = false;

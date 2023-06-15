@@ -12,6 +12,7 @@ router.get("/", function (req, res) {
   res.redirect("/posts");
 });
 
+// 게시글이 보여지는 메인페이지 (페이지네이션 포함)
 router.get("/posts", async function (req, res) {
   const page = parseInt(req.query.page) || 1;
   const pageSize = 5;
@@ -43,6 +44,7 @@ router.get("/posts", async function (req, res) {
   });
 });
 
+// 게시글 생성하는 POST
 router.post("/posts", async function (req, res) {
   if (!req.session.user) {
     return res.status(401).render("401");
@@ -95,6 +97,7 @@ router.post("/posts", async function (req, res) {
   res.redirect("/posts");
 });
 
+// 게시글 쓰는 페이지 
 router.get("/create-post", async function (req, res) {
   if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
@@ -114,6 +117,7 @@ router.get("/create-post", async function (req, res) {
   });
 });
 
+// 게시글, 댓글, 답글이 내용이 보여지는 페이지
 router.get("/posts/:id", async function (req, res) {
   let postId = req.params.id;
 
@@ -137,6 +141,7 @@ router.get("/posts/:id", async function (req, res) {
 
   const countInterval = 10000;
 
+  // 게시글 조회수 오르도록 하는 코드
   if (!lastCountTime || elapsedCountTime >= countInterval) {
     await db
       .getDb()
@@ -158,6 +163,7 @@ router.get("/posts/:id", async function (req, res) {
     .find({ post_id: postId })
     .toArray();
 
+  // 답글이 어떤 댓글에서 작성되었는지 찾는 코드
   const replyPromises = comment.map(async (c) => {
     const reply = await db
       .getDb()
@@ -179,6 +185,7 @@ router.get("/posts/:id", async function (req, res) {
   });
 });
 
+// 게시글 수정 페이지
 router.get("/posts/:id/edit", async function (req, res) {
   if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
@@ -216,6 +223,7 @@ router.get("/posts/:id/edit", async function (req, res) {
   });
 });
 
+// 게시글 수정 POST
 router.post("/posts/:id/edit", async function (req, res) {
   if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
@@ -264,6 +272,7 @@ router.post("/posts/:id/edit", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+// 게시글 삭제하는 POST (게시글 삭제시 해당 게시글의 모든 댓글과 답글도 함께 삭제)
 router.post("/posts/:id/delete", async function (req, res) {
   if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
@@ -302,6 +311,7 @@ router.post("/posts/:id/delete", async function (req, res) {
 
   await db.getDb().collection("posts").deleteOne({ _id: postId });
 
+  // 게시글 삭제시 게시글 번호가 비어있지 않도록 삭제한 게시글 뒤에 있는 게시글의 번호들을 1씩 감소
   await db
     .getDb()
     .collection("posts")
@@ -310,6 +320,7 @@ router.post("/posts/:id/delete", async function (req, res) {
   res.redirect("/posts");
 });
 
+// 댓글을 추가하는 POST
 router.post("/posts/:id/comments", async function (req, res) {
   let postId = req.params.id;
   let date = new Date();
@@ -329,6 +340,7 @@ router.post("/posts/:id/comments", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
+  // 댓글을 추가하는데 작성 날짜는 "2023.6.12 08:07:55" 이런식으로 시간까지 나오도록 해준다.
   const newComment = {
     post_id: post._id,
     name: user.name,
@@ -348,6 +360,7 @@ router.post("/posts/:id/comments", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+// 댓글을 수정하는 POST
 router.post("/posts/:id/comments/edit", async function (req, res) {
   let postId = req.params.id;
   let commentId = req.body.commentId;
@@ -381,6 +394,7 @@ router.post("/posts/:id/comments/edit", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+// 댓글을 삭제하는 POST (댓글 삭제시 해당 댓글에 작성된 모든 답글도 함께 삭제)
 router.post("/posts/:id/comments/delete", async function (req, res) {
   let postId = req.params.id;
   let commentId = req.body.commentId;
@@ -407,6 +421,7 @@ router.post("/posts/:id/comments/delete", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+// 댓글에 답글 추가하는 POST
 router.post("/posts/:id/comments/replies", async function (req, res) {
   let postId = req.params.id;
   let commentId = req.body.commentId;
@@ -456,6 +471,7 @@ router.post("/posts/:id/comments/replies", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+// 답글 수정하는 POST
 router.post("/posts/:id/comments/replies/edit", async function (req, res) {
   let postId = req.params.id;
   let replyId = req.body.replyId;
@@ -489,6 +505,7 @@ router.post("/posts/:id/comments/replies/edit", async function (req, res) {
   res.redirect("/posts/" + postId);
 });
 
+// 답글 삭제하는 POST
 router.post("/posts/:id/comments/replies/delete", async function (req, res) {
   let postId = req.params.id;
   let replyId = req.body.replyId;

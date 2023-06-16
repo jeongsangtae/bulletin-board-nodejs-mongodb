@@ -9,6 +9,7 @@ const router = express.Router();
 router.get("/signup", function (req, res) {
   let sessionSignUpInputData = req.session.inputData;
 
+  // 가입 페이지 내용을 빈 내용으로 초기화
   if (!sessionSignUpInputData) {
     sessionSignUpInputData = {
       hasError: false,
@@ -98,6 +99,7 @@ router.post("/signup", async function (req, res) {
 router.get("/login", function (req, res) {
   let sessionLoginInputData = req.session.inputData;
 
+  // 로그인 페이지 내용을 빈 내용으로 초기화
   if (!sessionLoginInputData) {
     sessionLoginInputData = {
       hasError: false,
@@ -179,6 +181,7 @@ router.get("/profile", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
+  // 프로필 페이지네이션
   const page = parseInt(req.query.page) || 1;
   const pageSize = 5;
   const pageButtonSize = 5;

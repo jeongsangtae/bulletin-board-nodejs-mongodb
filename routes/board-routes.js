@@ -14,6 +14,7 @@ router.get("/", function (req, res) {
 
 // 게시글이 보여지는 메인페이지 (페이지네이션 포함)
 router.get("/posts", async function (req, res) {
+  // 페이지네이션
   const page = parseInt(req.query.page) || 1;
   const pageSize = 5;
   const pageButtonSize = 5;
@@ -80,6 +81,7 @@ router.post("/posts", async function (req, res) {
     email: user.email,
   };
 
+  // 해싱된 비밀번호와 입력한 패스워드를 비교해서 확인
   const passwordEqual = await bcrypt.compare(passwordInput, user.password);
 
   if (!passwordEqual) {
@@ -133,6 +135,7 @@ router.get("/posts/:id", async function (req, res) {
     return res.status(404).render("404");
   }
 
+  // 게시글 조회수 10초 텀으로 오르도록 한다.
   const sessionKey = `count:${postId}`;
 
   const lastCountTime = req.session[sessionKey];
@@ -253,6 +256,7 @@ router.post("/posts/:id/edit", async function (req, res) {
     .collection("users")
     .findOne({ email: userEmail });
 
+  // 해싱된 비밀번호를 입력한 비밀번호와 비교
   const passwordEqual = await bcrypt.compare(passwordInput, user.password);
 
   if (!passwordEqual) {
@@ -312,6 +316,7 @@ router.post("/posts/:id/delete", async function (req, res) {
   await db.getDb().collection("posts").deleteOne({ _id: postId });
 
   // 게시글 삭제시 게시글 번호가 비어있지 않도록 삭제한 게시글 뒤에 있는 게시글의 번호들을 1씩 감소
+  // 삭제한 게시글 뒤에 있는 게시글의 번호를 확인하기 위해 $gt를 사용해 번호가 더 큰 것을 확인해서 감소시킨다.
   await db
     .getDb()
     .collection("posts")
@@ -451,6 +456,7 @@ router.post("/posts/:id/comments/replies", async function (req, res) {
     .collection("comments")
     .findOne({ _id: commentId });
 
+  // 댓글에서 했던 방식과 같이 표기되는 날짜가 시간까지 표기
   const newReply = {
     post_id: postId,
     comment_id: comment._id,

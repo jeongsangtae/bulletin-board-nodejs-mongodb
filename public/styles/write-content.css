@@ -130,7 +130,8 @@
   border: none;
   background-color: white;
   font-size: 0.8rem;
-  color: rgb(196, 181, 181);
+  /* color: rgb(196, 181, 181); */
+  color: rgb(139, 128, 128);
   cursor: pointer;
 }
 

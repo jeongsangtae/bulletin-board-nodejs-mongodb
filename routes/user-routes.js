@@ -39,15 +39,41 @@ router.post("/signup", async function (req, res) {
     !signUpEmail ||
     !signUpConfirmEmail ||
     !signUpName ||
-    signUpName.trim().length > 6 ||
     !signUpPassword ||
-    signUpPassword.trim().length < 6 ||
     signUpEmail !== signUpConfirmEmail ||
     !signUpEmail.includes("@")
   ) {
     req.session.inputData = {
       hasError: true,
       message: "잘못된 입력입니다. 다시 입력해주세요.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      name: signUpName,
+      password: signUpPassword,
+    };
+
+    req.session.save(function () {
+      res.redirect("/signup");
+    });
+    return;
+  } else if (signUpName.trim().length > 6) {
+    req.session.inputData = {
+      hasError: true,
+      message: "이름은 6자리까지 입력할 수 있습니다.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      name: signUpName,
+      password: signUpPassword,
+    };
+
+    req.session.save(function () {
+      res.redirect("/signup");
+    });
+    return;
+  } else if (signUpPassword.trim().length < 6) {
+    req.session.inputData = {
+      hasError: true,
+      message: "비밀번호를 6자리 이상 입력해주세요.",
       email: signUpEmail,
       confirmEmail: signUpConfirmEmail,
       name: signUpName,
@@ -80,6 +106,21 @@ router.post("/signup", async function (req, res) {
     });
     return;
   }
+
+  // if (signUpPassword.trim().length < 6) {
+  //   req.session.inputData = {
+  //     hasError: true,
+  //     message: "비밀번호를 6자리 이상 입력해주세요.",
+  //     email: signUpEmail,
+  //     confirmEmail: signUpConfirmEmail,
+  //     name: signUpName,
+  //     password: signUpPassword,
+  //   };
+  //   req.session.save(function () {
+  //     req.redirect("/signup");
+  //   });
+  //   return;
+  // }
 
   // 비밀번호 해싱
   const hashPassword = await bcrypt.hash(signUpPassword, 12);

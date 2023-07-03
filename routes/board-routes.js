@@ -90,7 +90,8 @@ router.post("/posts", async function (req, res) {
       user: user,
       title: titleInput,
       content: contentInput,
-      passwordErrorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
+      passwordErrorMessage:
+        "비밀번호가 다릅니다. 로그인 비밀번호를 입력해주세요!",
     });
   }
 
@@ -99,7 +100,7 @@ router.post("/posts", async function (req, res) {
   res.redirect("/posts");
 });
 
-// 게시글 쓰는 페이지 
+// 게시글 쓰는 페이지
 router.get("/create-post", async function (req, res) {
   if (!res.locals.isAuth || !req.session.user) {
     return res.status(401).render("401");
@@ -265,7 +266,8 @@ router.post("/posts/:id/edit", async function (req, res) {
       user: user,
       title: titleInput,
       content: contentInput,
-      passwordErrorMessage: "비밀번호가 다릅니다. 다시 확인해주세요!",
+      passwordErrorMessage:
+        "비밀번호가 다릅니다. 로그인 비밀번호를 입력해주세요!",
     });
   }
 

@@ -50,8 +50,6 @@
 
 3. 가입하기나 로그인은 모달창 방식으로 띄우기
 
-[JS, ExpressJS, MongoDB, EJS로 만드는 게시판](https://bulletin-board-v0w0.onrender.com/)
-
 ### 변경한 UI & UX
 
 1. 가입할 때 이름과 패스워드 자릿 수 입력에 대한 잘못된 입력에 관련된 텍스트를 따로 추가해주었다.
@@ -59,3 +57,5 @@
 2. 게시글 생성, 수정 시 비밀번호 입력 오류시 로그인 비밀번호 입력해달라는 문구로 변경
 
 3. 답글쓰기가 좀 더 눈에 띄도록 변경
+
+[JS, ExpressJS, MongoDB, EJS로 만드는 게시판](https://bulletin-board-v0w0.onrender.com/)
